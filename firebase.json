@@ -1,0 +1,9 @@
+{
+  "firebase": "pyramid-tourney-tracker",
+  "public": "/",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

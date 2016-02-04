@@ -1,0 +1,48 @@
+* Data Model
+Tournaments
+  Teams
+  Matches
+  Users
+** Users (User)
+** Tournaments (Tournament)
+** Teams (Team)
+** User
+*** id
+*** username/email
+*** password
+** Tournament (Teams, Matches, Tier Structure)
+*** Teams
+*** Matches (Match)
+*** Tier structure
+Example: [1, 4, 8, 16] or [1, 3, 5, 8]
+** Team
+*** Users
+*** Record
+**** Wins
+**** Losses
+**** Ties
+*** Tournaments
+**** Matches
+**** Average
+**** Record (same as above)
+*** Average
+** Match
+*** Teams
+*** Result
+**** Winner (team id)
+**** Loser (team id)
+**** Tie (team id)
+**** Tie (team id)
+* Design
+** Circles to represent teams, arranged in a pyramid
+*** Circle has team avator or something, then team average
+*** Hover for tooltip with more info
+*** Click to see team details and full record
+* UI
+** Users can create account, login
+** Users can create tourneys
+** Users can create and submit matches
+*** Match results must be approved by both teams before they count
+** Pyramid Component (Tiers)
+*** Tier Component (Teams)
+**** Team Component
