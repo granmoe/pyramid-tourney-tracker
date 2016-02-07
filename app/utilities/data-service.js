@@ -17,24 +17,24 @@ dbRoot.on('value', snapshot => {
 // Data API
 var service = {}
 
-service.addUser = function (userData) {
+service.addUser = userData => {
   users.push(userData)
   // TODO: auth
 }
 
-service.addTeam = function (teamData) {
+service.addTeam = teamData => {
   teams.push(teamData)
 }
 
-service.addMatch = function (matchData) {
+service.addMatch = matchData => {
   matches.push(matchData)
 }
 
-service.addTournament = function (tournamentData) {
+service.addTournament = tournamentData => {
   tournaments.push(tournamentData)
 }
 
-service.joinTournament = function (teamID) {
+service.joinTournament = teamID => {
   var team = snapshot.teams[teamID]
   var exists = !_.isEmpty(team)
   var isInTourney = tournaments.child('teams')[teamID]

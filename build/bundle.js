@@ -19679,11 +19679,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _dataService = __webpack_require__(163);
+	var _dataService = __webpack_require__(160);
 
 	var _dataService2 = _interopRequireDefault(_dataService);
 
-	var _Pyramid = __webpack_require__(160);
+	var _Pyramid = __webpack_require__(164);
 
 	var _Pyramid2 = _interopRequireDefault(_Pyramid);
 
@@ -19728,189 +19728,15 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Tier = __webpack_require__(161);
-
-	var _Tier2 = _interopRequireDefault(_Tier);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Pyramid = function (_React$Component) {
-	  _inherits(Pyramid, _React$Component);
-
-	  function Pyramid() {
-	    _classCallCheck(this, Pyramid);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Pyramid).apply(this, arguments));
-	  }
-
-	  _createClass(Pyramid, [{
-	    key: 'render',
-	    value: function render() {
-	      var Tiers = this.props.data.tierStructure.map(function (tierLength, index) {
-	        var start = index === 0 ? 0 : this.props.data.tierStructure[index - 1];
-	        var teams = this.props.data.teams.slice(start, tierLength);
-	        return _react2.default.createElement(_Tier2.default, { key: tierLength, teams: teams });
-	      }.bind(this));
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'pyramid' },
-	        Tiers
-	      );
-	    }
-	  }]);
-
-	  return Pyramid;
-	}(_react2.default.Component);
-
-	exports.default = Pyramid;
-
-/***/ },
-/* 161 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Team = __webpack_require__(162);
-
-	var _Team2 = _interopRequireDefault(_Team);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Tier = function (_React$Component) {
-	  _inherits(Tier, _React$Component);
-
-	  function Tier() {
-	    _classCallCheck(this, Tier);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Tier).apply(this, arguments));
-	  }
-
-	  _createClass(Tier, [{
-	    key: 'render',
-	    value: function render() {
-	      var Teams = this.props.teams.map(function (team) {
-	        return _react2.default.createElement(_Team2.default, { key: team.id, data: team });
-	      });
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'pyramid__tier' },
-	        Teams
-	      );
-	    }
-	  }]);
-
-	  return Tier;
-	}(_react2.default.Component);
-
-	exports.default = Tier;
-
-/***/ },
-/* 162 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Team = function (_React$Component) {
-	  _inherits(Team, _React$Component);
-
-	  function Team() {
-	    _classCallCheck(this, Team);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Team).apply(this, arguments));
-	  }
-
-	  _createClass(Team, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'pyramid__team' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'team__name' },
-	          this.props.data.name
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'team__average' },
-	          this.props.data.average
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Team;
-	}(_react2.default.Component);
-
-	exports.default = Team;
-
-/***/ },
-/* 163 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _firebase = __webpack_require__(164);
+	var _firebase = __webpack_require__(161);
 
 	var _firebase2 = _interopRequireDefault(_firebase);
 
-	var _lodash = __webpack_require__(165);
+	var _lodash = __webpack_require__(162);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -19963,7 +19789,7 @@
 	exports.default = service;
 
 /***/ },
-/* 164 */
+/* 161 */
 /***/ function(module, exports) {
 
 	/*! @license Firebase v2.4.0
@@ -20247,7 +20073,7 @@
 
 
 /***/ },
-/* 165 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -34823,10 +34649,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(166)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(163)(module), (function() { return this; }())))
 
 /***/ },
-/* 166 */
+/* 163 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -34840,6 +34666,182 @@
 		return module;
 	}
 
+
+/***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Tier = __webpack_require__(165);
+
+	var _Tier2 = _interopRequireDefault(_Tier);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Pyramid = function (_React$Component) {
+	  _inherits(Pyramid, _React$Component);
+
+	  function Pyramid() {
+	    _classCallCheck(this, Pyramid);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Pyramid).apply(this, arguments));
+	  }
+
+	  _createClass(Pyramid, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      var Tiers = this.props.data.tierStructure.map(function (tierLength, index) {
+	        var start = index === 0 ? 0 : _this2.props.data.tierStructure[index - 1];
+	        var teams = _this2.props.data.teams.slice(start, tierLength);
+	        return _react2.default.createElement(_Tier2.default, { key: tierLength, teams: teams });
+	      });
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'pyramid' },
+	        Tiers
+	      );
+	    }
+	  }]);
+
+	  return Pyramid;
+	}(_react2.default.Component);
+
+	exports.default = Pyramid;
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Team = __webpack_require__(166);
+
+	var _Team2 = _interopRequireDefault(_Team);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Tier = function (_React$Component) {
+	  _inherits(Tier, _React$Component);
+
+	  function Tier() {
+	    _classCallCheck(this, Tier);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Tier).apply(this, arguments));
+	  }
+
+	  _createClass(Tier, [{
+	    key: 'render',
+	    value: function render() {
+	      var Teams = this.props.teams.map(function (team) {
+	        return _react2.default.createElement(_Team2.default, { key: team.id, data: team });
+	      });
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'pyramid__tier' },
+	        Teams
+	      );
+	    }
+	  }]);
+
+	  return Tier;
+	}(_react2.default.Component);
+
+	exports.default = Tier;
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Team = function (_React$Component) {
+	  _inherits(Team, _React$Component);
+
+	  function Team() {
+	    _classCallCheck(this, Team);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Team).apply(this, arguments));
+	  }
+
+	  _createClass(Team, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'pyramid__team' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'team__name' },
+	          this.props.data.name
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'team__average' },
+	          this.props.data.average
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Team;
+	}(_react2.default.Component);
+
+	exports.default = Team;
 
 /***/ }
 /******/ ]);

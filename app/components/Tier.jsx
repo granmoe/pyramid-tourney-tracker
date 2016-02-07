@@ -3,7 +3,7 @@ import Team from './Team.jsx'
 
 export default class Tier extends React.Component {
   render() {
-    var Teams = this.props.teams.map( function(team) {
+    var Teams = this.props.teams.map( team => {
 	  return <Team key={team.id} data={team} />
     })
 
