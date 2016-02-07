@@ -1,8 +1,9 @@
 import React from 'react'
+import data from '../utilities/data-service.js'
 import Pyramid from './Pyramid.jsx'
 
 // TODO: Get data from firebase
-var data = {
+var mockData = {
 	tierStructure: [1, 3, 5, 8],
 	teams: [
 		{id: 456, name: "John", average: 0.78},
@@ -12,6 +13,6 @@ var data = {
 
 export default class App extends React.Component {
   render() {
-    return <Pyramid data={data}/>;
+    return <Pyramid data={mockData}/>;
   }
 }

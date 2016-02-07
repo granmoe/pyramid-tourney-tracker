@@ -1,48 +1,130 @@
 * Data Model
-Tournaments
-  Teams
-  Matches
-  Users
-** Users (User)
-** Tournaments (Tournament)
-** Teams (Team)
-** User
-*** id
-*** username/email
-*** password
-** Tournament (Teams, Matches, Tier Structure)
+** Tournaments
+*** ID
+*** Name
+*** Descriptions
+*** Rules
+*** Created
+*** Matches played
+*** Number of teams
+*** Tier structure [1,3,5,8]
 *** Teams
-*** Matches (Match)
-*** Tier structure
-Example: [1, 4, 8, 16] or [1, 3, 5, 8]
-** Team
-*** Users
-*** Record
+**** ID
+**** Name
+**** Users
+***** ID
+***** Name
 **** Wins
 **** Losses
 **** Ties
-*** Tournaments
-**** Matches
 **** Average
-**** Record (same as above)
-*** Average
-** Match
+**** Standing
+***** Rank
+***** Number of Competitors
+**** Matches (for this tourney only)
+***** ID
+***** Played (mm/dd/yyyy) (when results approved)
+***** Teams
+****** ID
+****** Name
+****** Result (null, -1, 0, 1)
+** Users
+*** ID
+*** Created
+*** Role
+*** Last Seen
+*** Tourneys (id, name, standing)
 *** Teams
-*** Result
-**** Winner (team id)
-**** Loser (team id)
-**** Tie (team id)
-**** Tie (team id)
+*** Wins
+*** Losses
+*** Ties
+*** Standing
+**** Rank
+**** Total Users
+*** Average
+*** Matches
+**** ID
+**** Played (mm/dd/yyyy) (when results approved)
+**** Teams
+***** ID
+***** Name
+***** Result (null, -1, 0, 1)
+** Teams
+*** Users
+**** ID
+**** Name
+*** Matches
+**** Teams
+***** ID
+***** Name
+***** Result (null, -1, 0 or 1) (not played, lost, tied, won)
+***** Users
+****** ID
+****** Name
+*** Tourneys
+**** ID
+**** Name
+**** Wins
+**** Losses
+**** Ties
+**** Average
+**** Standing
+***** Rank
+***** Number of Teams
+*** Wins
+*** Losses
+*** Ties
+*** Average
+*** Standing
+**** Rank
+**** Number of teams
+*** Tier Number
+** Matches
+*** ID
+*** Played (when results approved)
+*** Tourney
+**** ID
+**** Name
+*** Teams
+**** ID
+**** Name
+**** Result (null, -1, 0 or 1) (not played, lost, tied, won)
+**** Users
+***** ID
+***** Name
 * Design
+** Match results submitted by other teams will show up as a prominent notification
+*** Approving results should be very sleek and easy
 ** Circles to represent teams, arranged in a pyramid
 *** Circle has team avator or something, then team average
 *** Hover for tooltip with more info
 *** Click to see team details and full record
-* UI
+** Tourney Name as big heading
+** Tourney description as subheading
+** Tourney rules as collapsible thing
+* App
 ** Users can create account, login
+** Users can create teams, may contain another user
 ** Users can create tourneys
+** Users can enter one of their teams into a tourney
 ** Users can create and submit matches
 *** Match results must be approved by both teams before they count
-** Pyramid Component (Tiers)
-*** Tier Component (Teams)
-**** Team Component
+* UI
+** Show all tourneys in a big grid (tournaments)
+*** Pyramid Component (Tiers)
+**** Tier Component (Teams)
+***** Team Component
+* Work on these things first:
+** Create a data service to write to firebase through
+*** Ensures all redundant records are updated
+** Enable all basic actions needed
+*** add user, team, tourney, match
+*** add team to tourney if it is one of your teams
+*** request a match with another team in the tourney
+*** approve match results added by opponents
+*** update all stats accordingly
+* Enhancements
+** Other user must accept request to be on a team
+** Can only play teams in their tier and adjacent tiers
+** Error message if same team tries to join tourney again
+** Don't allow a user to have multiple teams in the same tourney
