@@ -19743,7 +19743,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// var dbRoot = new firebase('https://pyramid-tourney-tracker.firebaseio.com/prod')
-	var dbRoot = new _firebase2.default('https://pyramid-tourney-tracker.firebaseio.com/test');window['ref'] = dbRoot;
+	var dbRoot = new _firebase2.default('https://pyramid-tourney-tracker.firebaseio.com/test');window['ref'] = dbRoot; // DEBUGGING
 	var users = dbRoot.child('users');
 	var teams = dbRoot.child('teams');
 	var matches = dbRoot.child('matches');
@@ -19753,18 +19753,47 @@
 	// Keep snapshot current
 	dbRoot.on('value', function (snapshot) {
 	  snapshot = snapshot.val();
+	  window['snap'] = snapshot;
+	  console.log('new data', snapshot);
 	});
 
 	// Data API
-	var service = {};
-
-	service.addUser = function (userData) {
-	  users.push(userData);
-	  // TODO: auth
+	var service = {
+	  users: users,
+	  teams: teams,
+	  matches: matches,
+	  tournaments: tournaments
 	};
 
-	service.addTeam = function (teamData) {
-	  teams.push(teamData);
+	service.addUser = function (name, isAdmin) {
+	  // TODO: auth
+	  users.push({
+	    name: name,
+	    role: isAdmin ? 'admin' : 'user',
+	    tournaments: {},
+	    teams: {},
+	    matches: {},
+	    wins: 0,
+	    losses: 0,
+	    ties: 0,
+	    average: 0,
+	    standing: 'none'
+	  });
+	};
+
+	service.addTeam = function (teamName, users) {
+	  // users = team.users schema = { ID: { name: 'bob' }, ID: { name: 'sue' }}
+	  teams.push({
+	    name: teamName,
+	    users: users,
+	    matches: {},
+	    tournaments: {},
+	    wins: 0,
+	    losses: 0,
+	    ties: 0,
+	    average: 0,
+	    standing: 'none'
+	  });
 	};
 
 	service.addMatch = function (matchData) {
@@ -19772,13 +19801,23 @@
 	};
 
 	service.addTournament = function (tournamentData) {
-	  tournaments.push(tournamentData);
+	  // name, description, rules
+
+	  var defaults = {
+	    // created: string ('mm/dd/yyyy'),
+	    matches: {},
+	    tierStructure: { 0: 1, 1: 3, 2: 5, 3: 8, 4: 12, 5: 20 },
+	    teams: {}
+	  };
+
+	  var data = _lodash2.default.extend(defaults, tournamentData);
+	  tournaments.push(data);
 	};
 
 	service.joinTournament = function (teamID) {
 	  var team = snapshot.teams[teamID];
 	  var exists = !_lodash2.default.isEmpty(team);
-	  var isInTourney = tournaments.child('teams')[teamID];
+	  var isInTourney = !_lodash2.default.isEmpty(_lodash2.default.get(snapshot, 'tournaments.teams.'[teamId]));
 
 	  if (!exists || isInTourney) {
 	    return;
@@ -19786,6 +19825,7 @@
 	  // add team to tourney
 	};
 
+	window['service'] = service; // DEBUGGING
 	exports.default = service;
 
 /***/ },

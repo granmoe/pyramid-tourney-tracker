@@ -6,7 +6,6 @@
 *** Rules
 *** Created
 *** Matches played
-*** Number of teams
 *** Tier structure [1,3,5,8]
 *** Teams
 **** ID
@@ -76,8 +75,6 @@
 *** Ties
 *** Average
 *** Standing
-**** Rank
-**** Number of teams
 *** Tier Number
 ** Matches
 *** ID
