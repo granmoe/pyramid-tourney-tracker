@@ -18,6 +18,7 @@ dbRoot.on('value', snapshot => {
 
 // Data API
 var service = {
+	root: dbRoot,
   users: users,
   teams: teams,
   matches: matches,

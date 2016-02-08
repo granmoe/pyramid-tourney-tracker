@@ -19683,9 +19683,9 @@
 
 	var _dataService2 = _interopRequireDefault(_dataService);
 
-	var _Pyramid = __webpack_require__(164);
+	var _Tournaments = __webpack_require__(167);
 
-	var _Pyramid2 = _interopRequireDefault(_Pyramid);
+	var _Tournaments2 = _interopRequireDefault(_Tournaments);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19695,25 +19695,38 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	// TODO: Get data from firebase
-	var mockData = {
-		tierStructure: [1, 3, 5, 8],
-		teams: [{ id: 456, name: "John", average: 0.78 }, { id: 123, name: "Bob", average: 0.68 }]
-	};
-
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
 
-		function App() {
+		function App(props) {
 			_classCallCheck(this, App);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+
+			_this.tournaments = [];
+			_this.state = { tournaments: _this.tournaments };
+			return _this;
 		}
 
 		_createClass(App, [{
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(_Pyramid2.default, { data: mockData });
+				return _react2.default.createElement(_Tournaments2.default, { tournaments: this.state.tournaments });
+			}
+		}, {
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var _this2 = this;
+
+				_dataService2.default.tournaments.on('child_added', function (tournament) {
+					_this2.tournaments.push(tournament.val());
+					_this2.setState({ tournaments: _this2.tournaments });
+				});
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_dataService2.default.tournaments.off();
 			}
 		}]);
 
@@ -19759,6 +19772,7 @@
 
 	// Data API
 	var service = {
+	  root: dbRoot,
 	  users: users,
 	  teams: teams,
 	  matches: matches,
@@ -34708,7 +34722,10 @@
 
 
 /***/ },
-/* 164 */
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34716,16 +34733,16 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+			value: true
 	});
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Tier = __webpack_require__(165);
+	var _TourneyCard = __webpack_require__(168);
 
-	var _Tier2 = _interopRequireDefault(_Tier);
+	var _TourneyCard2 = _interopRequireDefault(_TourneyCard);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34735,41 +34752,45 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Pyramid = function (_React$Component) {
-	  _inherits(Pyramid, _React$Component);
+	var Tournaments = function (_React$Component) {
+			_inherits(Tournaments, _React$Component);
 
-	  function Pyramid() {
-	    _classCallCheck(this, Pyramid);
+			function Tournaments() {
+					_classCallCheck(this, Tournaments);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Pyramid).apply(this, arguments));
-	  }
+					return _possibleConstructorReturn(this, Object.getPrototypeOf(Tournaments).apply(this, arguments));
+			}
 
-	  _createClass(Pyramid, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
+			_createClass(Tournaments, [{
+					key: 'render',
+					value: function render() {
+							if (!this.props.tournaments.length) {
+									return _react2.default.createElement(
+											'div',
+											null,
+											'No Tournaments Found '
+									);
+							}
 
-	      var Tiers = this.props.data.tierStructure.map(function (tierLength, index) {
-	        var start = index === 0 ? 0 : _this2.props.data.tierStructure[index - 1];
-	        var teams = _this2.props.data.teams.slice(start, tierLength);
-	        return _react2.default.createElement(_Tier2.default, { key: tierLength, teams: teams });
-	      });
+							var tourneys = this.props.tournaments.map(function (tourney, key) {
+									return _react2.default.createElement(_TourneyCard2.default, { key: key, tourney: tourney });
+							});
 
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'pyramid' },
-	        Tiers
-	      );
-	    }
-	  }]);
+							return _react2.default.createElement(
+									'div',
+									null,
+									tourneys
+							);
+					}
+			}]);
 
-	  return Pyramid;
+			return Tournaments;
 	}(_react2.default.Component);
 
-	exports.default = Pyramid;
+	exports.default = Tournaments;
 
 /***/ },
-/* 165 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34777,16 +34798,16 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+			value: true
 	});
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Team = __webpack_require__(166);
+	var _dataService = __webpack_require__(160);
 
-	var _Team2 = _interopRequireDefault(_Team);
+	var _dataService2 = _interopRequireDefault(_dataService);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34796,92 +34817,39 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Tier = function (_React$Component) {
-	  _inherits(Tier, _React$Component);
+	var TourneyCard = function (_React$Component) {
+			_inherits(TourneyCard, _React$Component);
 
-	  function Tier() {
-	    _classCallCheck(this, Tier);
+			function TourneyCard() {
+					_classCallCheck(this, TourneyCard);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Tier).apply(this, arguments));
-	  }
+					return _possibleConstructorReturn(this, Object.getPrototypeOf(TourneyCard).apply(this, arguments));
+			}
 
-	  _createClass(Tier, [{
-	    key: 'render',
-	    value: function render() {
-	      var Teams = this.props.teams.map(function (team) {
-	        return _react2.default.createElement(_Team2.default, { key: team.id, data: team });
-	      });
+			_createClass(TourneyCard, [{
+					key: 'render',
+					value: function render() {
+							return _react2.default.createElement(
+									'div',
+									{ className: 'tourneyCard' },
+									_react2.default.createElement(
+											'div',
+											{ className: 'tourneyCard__heading' },
+											this.props.tourney.name
+									),
+									_react2.default.createElement(
+											'div',
+											{ className: 'tourneyCard__description' },
+											this.props.tourney.description
+									)
+							);
+					}
+			}]);
 
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'pyramid__tier' },
-	        Teams
-	      );
-	    }
-	  }]);
-
-	  return Tier;
+			return TourneyCard;
 	}(_react2.default.Component);
 
-	exports.default = Tier;
-
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Team = function (_React$Component) {
-	  _inherits(Team, _React$Component);
-
-	  function Team() {
-	    _classCallCheck(this, Team);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Team).apply(this, arguments));
-	  }
-
-	  _createClass(Team, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'pyramid__team' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'team__name' },
-	          this.props.data.name
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'team__average' },
-	          this.props.data.average
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Team;
-	}(_react2.default.Component);
-
-	exports.default = Team;
+	exports.default = TourneyCard;
 
 /***/ }
 /******/ ]);
