@@ -19683,7 +19683,7 @@
 
 	var _dataService2 = _interopRequireDefault(_dataService);
 
-	var _Tournaments = __webpack_require__(167);
+	var _Tournaments = __webpack_require__(164);
 
 	var _Tournaments2 = _interopRequireDefault(_Tournaments);
 
@@ -34722,10 +34722,7 @@
 
 
 /***/ },
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34740,7 +34737,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TourneyCard = __webpack_require__(168);
+	var _TourneyCard = __webpack_require__(165);
 
 	var _TourneyCard2 = _interopRequireDefault(_TourneyCard);
 
@@ -34790,7 +34787,7 @@
 	exports.default = Tournaments;
 
 /***/ },
-/* 168 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
