@@ -1,26 +1,19 @@
 import React from 'react'
-import data from '../utilities/data-service.js'
-import Tournaments from './Tournaments.jsx'
+import { Link } from 'react-router'
 
 export default class App extends React.Component {
-	constructor(props) {
-		super(props)
-		this.tournaments = []
-		this.state = { tournaments: this.tournaments }
-	}
-
   render() {
-		return <Tournaments tournaments={this.state.tournaments} />
+		return (
+      <div>
+  			<h1>Pyramid Tourney Tracker</h1>
+	  		<ul>
+		  		<li><Link to="/tournaments">Tournaments</Link></li>
+			  	<li><Link to="/register">register</Link></li>
+			  	<li><Link to="/login">login</Link></li>
+  			</ul>
+
+  			{this.props.children}
+      </div>
+		)
   }
-
-	componentWillMount() {
-		data.tournaments.on('child_added', tournament => {
-			this.tournaments.push(tournament.val())
-			this.setState({ tournaments: this.tournaments })
-		})
-	}
-
-	componentWillUnmount() {
-		data.tournaments.off()
-	}
 }
