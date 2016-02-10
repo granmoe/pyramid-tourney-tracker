@@ -121,7 +121,9 @@
 *** approve match results added by opponents
 *** update all stats accordingly
 * Enhancements
+** Activity Feed Widget
 ** Other user must accept request to be on a team
 ** Can only play teams in their tier and adjacent tiers
 ** Error message if same team tries to join tourney again
 ** Don't allow a user to have multiple teams in the same tourney
+

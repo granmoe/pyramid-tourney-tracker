@@ -21,19 +21,23 @@ const common = {
   },
   module: {
     loaders: [
+//      {
+//        test: /\.css$/,
+//        loaders: ['style', 'css'],
+//        include: PATHS.app
+//      },
       {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
+        test: /\.less$/,
+        loader: 'style!css!less',
         include: PATHS.app
-      },
-      {
+      }, {
         test: /\.jsx?$/,
         loaders: ['babel?cacheDirectory'],
         include: PATHS.app
       }
     ]
   }
-};
+}
 
 if(TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
@@ -57,7 +61,7 @@ if(TARGET === 'start' || !TARGET) {
     plugins: [
       new webpack.HotModuleReplacementPlugin()
     ]
-  });
+  })
 }
 
 if(TARGET === 'build') {

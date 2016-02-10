@@ -4,16 +4,22 @@ import { Link } from 'react-router'
 export default class App extends React.Component {
   render() {
 		return (
-      <div>
-  			<h1>Pyramid Tourney Tracker</h1>
-	  		<ul>
-		  		<li><Link to="/tournaments">Tournaments</Link></li>
-			  	<li><Link to="/register">register</Link></li>
-			  	<li><Link to="/login">login</Link></li>
+			<div>
+      <nav className='navbar'>
+	  		<ul className='navbar__items'>
+		  			<li className='navbar__item'>
+								<Link className='navbar__link' to='/tournaments'>Tournaments</Link>
+						</li>
+			  		<li className='navbar__item'>
+								<Link className='navbar__link' to='/login'>Login</Link>
+						</li>
   			</ul>
+      </nav>
 
-  			{this.props.children}
-      </div>
+ 			<h1 className='main-header'>Pyramid Tourney Tracker</h1>
+
+ 			{this.props.children}
+			</div>
 		)
   }
 }

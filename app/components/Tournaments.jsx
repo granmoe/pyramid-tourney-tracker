@@ -18,14 +18,14 @@ export default class Tournaments extends React.Component {
 
   render() {
 	  if (!this.state.tournaments.length) {
-			return <div>No Tournaments Found </div>
+			return <div className='no-tourneys'>No Tournaments Found </div>
 		}
 
     var tourneys = this.state.tournaments.map( (tourney, key) => {
-    	return <TourneyCard key={key} tourney={tourney} />
+    	return <TourneyCard className='tourney-card' key={key} tourney={tourney} />
 		})
 
-		return <div>{tourneys}</div>
+		return <div className='tourney-list'>{tourneys}</div>
   }
 
 	componentWillUnmount() {
