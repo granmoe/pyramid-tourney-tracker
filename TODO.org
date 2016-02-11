@@ -112,6 +112,7 @@
 **** Tier Component (Teams)
 ***** Team Component
 * Work on these things first:
+** Login
 ** Create a data service to write to firebase through
 *** Ensures all redundant records are updated
 ** Enable all basic actions needed
@@ -121,7 +122,9 @@
 *** approve match results added by opponents
 *** update all stats accordingly
 * Enhancements
+** Activity Feed Widget
 ** Other user must accept request to be on a team
 ** Can only play teams in their tier and adjacent tiers
 ** Error message if same team tries to join tourney again
 ** Don't allow a user to have multiple teams in the same tourney
+

@@ -2,7 +2,7 @@ import firebase from 'firebase'
 import _ from 'lodash'
 
 // var dbRoot = new firebase('https://pyramid-tourney-tracker.firebaseio.com/prod')
-var dbRoot = new firebase('https://pyramid-tourney-tracker.firebaseio.com/test'); window['ref'] = dbRoot // DEBUGGING
+var dbRoot = new firebase('https://pyramid-tourney-tracker.firebaseio.com/test2'); window['ref'] = dbRoot // DEBUGGING
 var users = dbRoot.child('users')
 var teams = dbRoot.child('teams')
 var matches = dbRoot.child('matches')
