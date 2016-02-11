@@ -11,6 +11,7 @@ const PATHS = {
 process.env.BABEL_ENV = TARGET;
 
 const common = {
+  devtool: 'source-map',
   entry: PATHS.app,
   resolve: {
     extensions: ['', '.js', '.jsx']

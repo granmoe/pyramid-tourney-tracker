@@ -112,6 +112,7 @@
 **** Tier Component (Teams)
 ***** Team Component
 * Work on these things first:
+** Login
 ** Create a data service to write to firebase through
 *** Ensures all redundant records are updated
 ** Enable all basic actions needed

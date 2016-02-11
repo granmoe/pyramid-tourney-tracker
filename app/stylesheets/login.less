@@ -1,7 +1,6 @@
 .login-form {
 	margin: 15px 30px;
 	max-width: 400px;
-	text-align: center;
 }
 
 .login-method {
@@ -10,5 +9,17 @@
 			background-size: 240px;
 			height: 60px;
 			width: 240px;
+
+			&:hover {
+			    background-image: url('/app/assets/btn_google_signin_dark_focus_web@2x.png');
+			}
+
+			&:active {
+			    background-image: url('/app/assets/btn_google_signin_dark_pressed_web@2x.png');
+			}
+
+			.disabled {
+			    background-image: url('/app/assets/btn_google_signin_dark_pressed_web@2x.png');
+			}
 		}
 }
