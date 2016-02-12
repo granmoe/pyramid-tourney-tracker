@@ -4,32 +4,39 @@ import data from '../utilities/data-service.js'
 
 export default class App extends React.Component {
 	componentWillMount () {
-		this.resetUser()
+		this.clearUser()
 
   	var authData = data.root.getAuth()
+
 		if (authData) {
-			this.setState({
-				isLoggedIn: true,
-				displayName: authData.google.displayName,
-				profileImageURL: authData.google.profileImageURL
-			})
+			this.setUser(authData)
 		}
 
+		data.root.onAuth(this.onAuthCallback.bind(this))
+	}
 
-		data.root.onAuth(authData => {
-			if (authData) {
-				this.setState({
-					displayName: authData.google.displayName,
-					isLoggedIn: true,
-					profileImageURL: authData.google.profileImageURL
-				})
-			} else {
-				this.resetUser()
-			}
+	componentWillUnmount() {
+  	data.root.offAuth(this.onAuthCallback.bind(this))
+	}
+
+	onAuthCallback(authData) {
+		if (authData) {
+			this.setUser(authData)
+		} else {
+  		this.clearUser()
+		}
+	}
+
+
+	setUser(authData) {
+		this.setState({
+			displayName: authData.google.displayName,
+			isLoggedIn: true,
+			profileImageURL: authData.google.profileImageURL
 		})
 	}
 
-	resetUser() {
+	clearUser() {
 		this.setState({ displayName: 'guest', isLoggedIn: false, profileImageURL: null })
 	}
 

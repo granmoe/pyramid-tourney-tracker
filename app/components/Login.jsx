@@ -11,21 +11,35 @@ export default class Login extends React.Component {
 	componentWillMount () {
 		var authData = data.root.getAuth()
 		if (authData) {
-			this.setState({ isLoggedIn: true, attempts: 0 })
+			this.setUser()
 		}
 
-		data.root.onAuth(authData => {
-			if (authData) {
-				this.setState({
-					isLoggedIn: true,
-					attempts: 0
-				})
-			} else {
-				this.setState({
-					isLoggedIn: false,
-					attempts: 0
-				})
-			}
+		data.root.onAuth(this.onAuthCallback.bind(this))
+	}
+
+	componentWillUnmount() {
+		data.root.offAuth(this.onAuthCallback.bind(this))
+	}
+
+	onAuthCallback(authData) {
+  	if (authData) {
+			this.setUser()
+		} else {
+  		this.clearUser()
+		}
+	}
+
+	setUser() {
+ 		this.setState({
+  		isLoggedIn: true,
+	  	attempts: 0
+	  })
+	}
+
+	clearUser() {
+  	this.setState({
+	  	isLoggedIn: false,
+			attempts: 0
 		})
 	}
 
@@ -73,7 +87,6 @@ export default class Login extends React.Component {
 				this.setState({ isLoggedIn: true })
 				console.log("Authenticated successfully with payload:", authData);
 				// TODO: init user with auth data
-				setTimeout( _ => browserHistory.push('/'))
 			}
 		})
 	}
