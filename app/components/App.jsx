@@ -30,14 +30,12 @@ export default class App extends React.Component {
 
 	setUser(authData) {
 		this.setState({
-			displayName: authData.google.displayName,
-			isLoggedIn: true,
-			profileImageURL: authData.google.profileImageURL
+			isLoggedIn: true
 		})
 	}
 
 	clearUser() {
-		this.setState({ displayName: 'guest', isLoggedIn: false, profileImageURL: null })
+		this.setState({ isLoggedIn: false })
 	}
 
 	logout() {
@@ -55,12 +53,10 @@ export default class App extends React.Component {
    				{this.state.isLoggedIn ? (
  					<li className='navbar__item navbar__text'>
 						<div className='navbar__display-name'>
-  						<span>Logged in as </span>
-  	  				<span>{this.state.displayName}</span>
+							Logged In
 							&nbsp;
-							<a href='#' onClick={this.logout.bind(this)}>(logout)</a>
+							<a href='javascript:void(0)' onClick={this.logout.bind(this)}>(logout)</a>
 						</div>
-  					<img className='navbar__profile-pic' src={this.state.profileImageURL}></img>
 					</li>
 					) : (
 					<li className='navbar__item'>

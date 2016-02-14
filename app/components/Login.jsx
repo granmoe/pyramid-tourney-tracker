@@ -1,14 +1,21 @@
 import React from 'react'
 import data from '../utilities/data-service.js'
-import { browserHistory } from 'react-router'
+import _ from 'lodash'
 
 export default class Login extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { attempts: 0, isLoggedIn: false }
+		this.state = {
+			attempts: 0,
+			isLoggedIn: false,
+			loginSelected: true,
+			displayName: '',
+			email: '',
+			password: ''
+		}
 	}
 
-	componentWillMount () {
+	componentDidMount () {
 		var authData = data.root.getAuth()
 		if (authData) {
 			this.setUser()
@@ -43,51 +50,82 @@ export default class Login extends React.Component {
 		})
 	}
 
+	handleDisplayNameChange (e) {
+    this.setState({ displayName : e.target.value })
+	}
+
+	handleEmailChange (e) {
+		this.setState({ email : e.target.value })
+	}
+
+	handlePasswordChange (e) {
+		this.setState({ password : e.target.value })
+	}
+
 	render() {
-		var loginMethods
-		var errorMessage
-		var successMessage
+    var form
+		var toggleText
+		var loginButton
 
 		if (this.state.isLoggedIn === false) {
-			loginMethods =
-				<div className='login-method'>
-					<div className='login-method__description'></div>
-					<div onClick={this.login.bind(this)} className='login-method__btn-goog'></div>
+			var toggleButton =
+			<div onClick={this.toggleForm.bind(this)} className="toggle-button row row-top">
+				<span className={this.state.loginSelected ? "active toggle-option" : "toggle-option"}>Login</span>
+				<span className={!this.state.loginSelected ? "active toggle-option" : "toggle-option"}>Register</span>
+			</div>
+
+			if (this.state.loginSelected) {
+				toggleText = "Register a new account"
+  			loginButton = <a href="javascript:void(0)" onClick={this.login.bind(this)} className="btn btn-login row row-bottom">Login</a>
+				form =
+				<div className="login-form">
+				<input className="row" onChange={this.handleEmailChange.bind(this)} value={this.state.email} name="email" type="email" placeholder="email"></input>
+				<input className="row" onChange={this.handlePasswordChange.bind(this)} value={this.state.password} name="password" type="password" placeholder="password"></input>
 				</div>
+			} else {
+				toggleText = "Login with an existing account"
+	  		loginButton = <a href="javascript:void(0)" onClick={this.register.bind(this)} className="btn btn-register row row-bottom">Register</a>
+				form =
+				<div className="login-form">
+				<input className="row" onChange={this.handleEmailChange.bind(this)} value={this.state.email} name="email" type="email" placeholder="email"></input>
+  			<input className="row" onChange={this.handlePasswordChange.bind(this)} value={this.state.password} name="password" type="password" placeholder="password"></input>
+  		  <input className="row" onChange={this.handleDisplayNameChange.bind(this)} value={this.state.displayName} name="displayName" type="text" placeholder="display name"></input>
+				</div>
+			}
 
   		if (this.state.attempts > 0) {
-				errorMessage = <div className='login-error-first'>Please try again</div>
-			} else if (this.state.attempts > 1) {
-				errorMessage = <div className='login-error-second'>You've failed twice so far</div>
-			} else if (this.state.attempts > 2) {
- 				errorMessage = <div className='login-error-third'>Hat trick!</div>
- 			}
+				var errorMessage = <div className='login-error-first'>Please try again</div>
+			}
  		} else {
- 			successMessage =
- 			<div className='login-success'>
- 				Success!
- 			</div>
-  	}
+			var loggedInMessage = "You are logged in"
+		}
 
 		return (
-			<div className='login-form'>
-			{successMessage}
-			{errorMessage}
-			{loginMethods}
+			<div className="login-container">
+				{errorMessage}
+				{loggedInMessage}
+   			{toggleButton}
+  		  {form}
+	  	  {loginButton}
 			</div>
 		)
 	}
 
-	login() {
+	toggleForm (e) {
+	  this.setState({ loginSelected: !this.state.loginSelected })
+	}
+
+	register (e) {
+		data.createUserAndLogin( this.state.email, this.state.password, this.state.displayName )
+	}
+
+	login(e) {
 		var attempts = this.state.attempts
 		this.setState({ attempts: attempts++ })
 
-		data.root.authWithOAuthPopup("google", (error, authData) => {
-			if (!error) {
+		data.loginUser({ email: this.state.email, password: this.state.password }).bind(this)
+		  .then( _ => {
 				this.setState({ isLoggedIn: true })
-				console.log("Authenticated successfully with payload:", authData);
-				// TODO: init user with auth data
-			}
-		})
+			})
 	}
 }
