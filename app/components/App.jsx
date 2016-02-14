@@ -27,7 +27,6 @@ export default class App extends React.Component {
 		}
 	}
 
-
 	setUser(authData) {
 		this.setState({
 			isLoggedIn: true
@@ -53,8 +52,7 @@ export default class App extends React.Component {
    				{this.state.isLoggedIn ? (
  					<li className='navbar__item navbar__text'>
 						<div className='navbar__display-name'>
-							Logged In
-							&nbsp;
+							Logged In As {this.state.displayName}
 							<a href='javascript:void(0)' onClick={this.logout.bind(this)}>(logout)</a>
 						</div>
 					</li>

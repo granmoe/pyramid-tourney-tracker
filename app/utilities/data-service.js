@@ -17,6 +17,7 @@ dbRoot.on('value', snapshot => {
   snapshot = snapshot.val()
   window['snap'] = snapshot
   console.log('new data', snapshot)
+  console.log(profiles)
 })
 
 // Data API

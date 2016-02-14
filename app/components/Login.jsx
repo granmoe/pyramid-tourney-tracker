@@ -1,6 +1,5 @@
 import React from 'react'
 import data from '../utilities/data-service.js'
-import _ from 'lodash'
 
 export default class Login extends React.Component {
 	constructor(props) {
@@ -50,46 +49,45 @@ export default class Login extends React.Component {
 		})
 	}
 
-	handleDisplayNameChange (e) {
-    this.setState({ displayName : e.target.value })
-	}
-
-	handleEmailChange (e) {
-		this.setState({ email : e.target.value })
-	}
-
-	handlePasswordChange (e) {
-		this.setState({ password : e.target.value })
+	onInputChange (fieldName, e) { // TODO: Add validation
+		if (fieldName === 'email') {
+			this.setState({ email : e.target.value })
+		} else if (fieldName === 'password') {
+			this.setState({ password : e.target.value })
+		} else if (fieldName === 'displayName') {
+			this.setState({ displayName : e.target.value })
+	  }
+	  console.log(e.target.value)
 	}
 
 	render() {
+   	var toggleText
     var form
-		var toggleText
 		var loginButton
 
 		if (this.state.isLoggedIn === false) {
 			var toggleButton =
 			<div onClick={this.toggleForm.bind(this)} className="toggle-button row row-top">
-				<span className={this.state.loginSelected ? "active toggle-option" : "toggle-option"}>Login</span>
-				<span className={!this.state.loginSelected ? "active toggle-option" : "toggle-option"}>Register</span>
+				<div className={this.state.loginSelected ? "active toggle-option" : "toggle-option"}>Login</div>
+				<div className={!this.state.loginSelected ? "active toggle-option" : "toggle-option"}>Register</div>
 			</div>
 
 			if (this.state.loginSelected) {
 				toggleText = "Register a new account"
   			loginButton = <a href="javascript:void(0)" onClick={this.login.bind(this)} className="btn btn-login row row-bottom">Login</a>
 				form =
-				<div className="login-form">
-				<input className="row" onChange={this.handleEmailChange.bind(this)} value={this.state.email} name="email" type="email" placeholder="email"></input>
-				<input className="row" onChange={this.handlePasswordChange.bind(this)} value={this.state.password} name="password" type="password" placeholder="password"></input>
+				<div className='login-form'>
+						<input className='row' name='email' onChange={this.onInputChange.bind(this, 'email')} value={this.state.email} type='email' placeholder='email' />
+  					<input className='row' name='password' onChange={this.onInputChange.bind(this, 'password')} value={this.state.password} type='password' placeholder='password' />
 				</div>
 			} else {
 				toggleText = "Login with an existing account"
 	  		loginButton = <a href="javascript:void(0)" onClick={this.register.bind(this)} className="btn btn-register row row-bottom">Register</a>
 				form =
-				<div className="login-form">
-				<input className="row" onChange={this.handleEmailChange.bind(this)} value={this.state.email} name="email" type="email" placeholder="email"></input>
-  			<input className="row" onChange={this.handlePasswordChange.bind(this)} value={this.state.password} name="password" type="password" placeholder="password"></input>
-  		  <input className="row" onChange={this.handleDisplayNameChange.bind(this)} value={this.state.displayName} name="displayName" type="text" placeholder="display name"></input>
+				<div className='login-form'>
+ 					<input className='row' name='email' onChange={this.onInputChange.bind(this, 'email')} value={this.state.email} type='email' placeholder='email' />
+  				<input className='row' name='password' onChange={this.onInputChange.bind(this, 'password')} value={this.state.password} type='password' placeholder='password' />
+	  			<input className='row' name='displayName' onChange={this.onInputChange.bind(this, 'displayName')} value={this.state.displayName} type='text' placeholder='display name' />
 				</div>
 			}
 
@@ -105,7 +103,7 @@ export default class Login extends React.Component {
 				{errorMessage}
 				{loggedInMessage}
    			{toggleButton}
-  		  {form}
+				{form}
 	  	  {loginButton}
 			</div>
 		)
@@ -123,7 +121,7 @@ export default class Login extends React.Component {
 		var attempts = this.state.attempts
 		this.setState({ attempts: attempts++ })
 
-		data.loginUser({ email: this.state.email, password: this.state.password }).bind(this)
+		data.loginUser.bind(this, { email: this.state.email, password: this.state.password })()
 		  .then( _ => {
 				this.setState({ isLoggedIn: true })
 			})

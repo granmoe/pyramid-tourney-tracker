@@ -34,18 +34,21 @@
 
 .toggle-button, .toggle-button.row {
 		padding: 0;
+		display: table;
 
-	 .toggle-option {
+	 .toggle-option, .toggle-option.row {
+			 display: table-cell !important;
        background: lightgray;
-			 font-size: 18px;
+			 color: @darkBlue;
+       font-size: 18px;
 			 display: inline-block;
 			 width: 50%;
 			 height: 100%;
+			 vertical-align: middle;
 			 text-align: center;
 
 			 &.active {
 					 background: whitesmoke;
-					 color: @darkBlue;
 			 }
 		}
 }
