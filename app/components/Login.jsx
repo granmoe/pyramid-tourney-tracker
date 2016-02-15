@@ -10,7 +10,8 @@ export default class Login extends React.Component {
 			loginSelected: true,
 			displayName: '',
 			email: '',
-			password: ''
+			password: '',
+			errorMessage: ''
 		}
 	}
 
@@ -57,7 +58,6 @@ export default class Login extends React.Component {
 		} else if (fieldName === 'displayName') {
 			this.setState({ displayName : e.target.value })
 	  }
-	  console.log(e.target.value)
 	}
 
 	render() {
@@ -91,8 +91,8 @@ export default class Login extends React.Component {
 				</div>
 			}
 
-  		if (this.state.attempts > 0) {
-				var errorMessage = <div className='login-error-first'>Please try again</div>
+  		if (this.state.errorMessage) {
+				var errorMessage = <div className='login-error'>{this.state.errorMessage}</div>
 			}
  		} else {
 			var loggedInMessage = "You are logged in"
@@ -123,7 +123,10 @@ export default class Login extends React.Component {
 
 		data.loginUser.bind(this, { email: this.state.email, password: this.state.password })()
 		  .then( _ => {
-				this.setState({ isLoggedIn: true })
+				this.setState({ isLoggedIn: true, errorMessage: '' })
 			})
+  		.catch( err => {
+  	    this.setState({ errorMessage: err.message || 'Sorry, there was an error. Please try again.' })
+		  })
 	}
 }
