@@ -6,28 +6,9 @@ import rebase from 're-base'
 var dbRoot = new firebase('https://pyramid-tourney-tracker.firebaseio.com/test2'); window['ref'] = dbRoot // DEBUGGING
 var base = rebase.createClass('https://pyramid-tourney-tracker.firebaseio.com/test2')
 
-var profiles = dbRoot.child('profiles')
-var teams = dbRoot.child('teams')
-var matches = dbRoot.child('matches')
-var tournaments = dbRoot.child('tournaments')
-var snapshot = {}
-
-// Keep snapshot current
-dbRoot.on('value', snapshot => {
-  snapshot = snapshot.val()
-  window['snap'] = snapshot
-  console.log('new data', snapshot)
-  console.log(profiles)
-})
-
-// Data API
 var service = {
 	base: base,
-	root: dbRoot,
-	profiles: profiles,
-  teams: teams,
-  matches: matches,
-  tournaments: tournaments
+	root: dbRoot
 }
 
 service.makeUserAdmin = function (userId) {

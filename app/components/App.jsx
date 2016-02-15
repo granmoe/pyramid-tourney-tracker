@@ -1,44 +1,32 @@
 import React from 'react'
 import { Link } from 'react-router'
-import data from '../utilities/data-service.js'
+import data from '../utilities/data-service'
+import UserToolbar from './UserToolbar.jsx'
 
 export default class App extends React.Component {
 	componentWillMount () {
-		this.clearUser()
+    this.state = { uid: null}
 
   	var authData = data.root.getAuth()
 
 		if (authData) {
-			this.setUser(authData)
+			this.state = { uid: authData.uid }
 		}
 
-		data.root.onAuth(this.onAuthCallback.bind(this))
+		this.onAuthRef = this.onAuthCallback.bind(this)
+		data.root.onAuth(this.onAuthRef)
 	}
 
 	componentWillUnmount() {
-  	data.root.offAuth(this.onAuthCallback.bind(this))
+  	data.root.offAuth(this.onAuthRef)
 	}
 
 	onAuthCallback(authData) {
 		if (authData) {
-			this.setUser(authData)
+			this.setState({ uid: authData.uid })
 		} else {
-  		this.clearUser()
+  		this.setState({ uid: null })
 		}
-	}
-
-	setUser(authData) {
-		this.setState({
-			isLoggedIn: true
-		})
-	}
-
-	clearUser() {
-		this.setState({ isLoggedIn: false })
-	}
-
-	logout() {
-		data.root.unauth()
 	}
 
   render() {
@@ -49,17 +37,12 @@ export default class App extends React.Component {
 	  			<li className='navbar__item'>
 						<Link className='navbar__link' to='/tournaments'>Tournaments</Link>
 					</li>
-   				{this.state.isLoggedIn ? (
- 					<li className='navbar__item navbar__text'>
-						<div className='navbar__display-name'>
-							Logged In As {this.state.displayName}
-							<a href='javascript:void(0)' onClick={this.logout.bind(this)}>(logout)</a>
-						</div>
-					</li>
+   				{this.state.uid ? (
+						<UserToolbar uid={this.state.uid} />
 					) : (
-					<li className='navbar__item'>
-						<Link className='navbar__link' to='/login'>Login</Link>
-  	  		</li>
+  					<li className='navbar__item'>
+	  					<Link className='navbar__link' to='/login'>Login</Link>
+  	    		</li>
 					)}
   		  </ul>
       </nav>
