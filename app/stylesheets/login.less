@@ -1,25 +1,58 @@
-.login-form {
+.login-container {
 	margin: 15px 30px;
-	max-width: 400px;
+	width: 320px;
+
+	.row {
+			border-top: 1px solid lightgray;
+			border-left: 1px solid lightgray;
+			border-right: 1px solid lightgray;
+			border-bottom: 0;
+			display: block;
+			width: 100%;
+			height: 40px;
+			box-sizing: border-box;
+			padding: 5px;
+			font-size: 16px;
+			background: #fff;
+			overflow: hidden;
+			&-top {
+					border-radius: 10px 10px 0 0;
+			}
+			&-bottom {
+					border-bottom: 1px solid lightgray;
+					border-radius: 0 0 10px 10px;
+			}
+	}
+
+	.btn-login, .btn-register {
+			text-align: center;
+			background: @blue;
+			color: #fff;
+			font-size: 18px;
+	}
 }
 
-.login-method {
-		&__btn-goog {
-			background-image: url('/app/assets/btn_google_signin_dark_normal_web@2x.png');
-			background-size: 240px;
-			height: 60px;
-			width: 240px;
+.login-error {
+		color: @red;
+}
 
-			&:hover {
-			    background-image: url('/app/assets/btn_google_signin_dark_focus_web@2x.png');
-			}
+.toggle-button, .toggle-button.row {
+		padding: 0;
+		display: table;
 
-			&:active {
-			    background-image: url('/app/assets/btn_google_signin_dark_pressed_web@2x.png');
-			}
+	 .toggle-option, .toggle-option.row {
+			 display: table-cell !important;
+       background: lightgray;
+			 color: @darkBlue;
+       font-size: 18px;
+			 display: inline-block;
+			 width: 50%;
+			 height: 100%;
+			 vertical-align: middle;
+			 text-align: center;
 
-			.disabled {
-			    background-image: url('/app/assets/btn_google_signin_dark_pressed_web@2x.png');
-			}
+			 &.active {
+					 background: whitesmoke;
+			 }
 		}
 }

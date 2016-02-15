@@ -1,40 +1,32 @@
 import React from 'react'
 import { Link } from 'react-router'
-import data from '../utilities/data-service.js'
+import data from '../utilities/data-service'
+import UserToolbar from './UserToolbar.jsx'
 
 export default class App extends React.Component {
 	componentWillMount () {
-		this.resetUser()
+    this.state = { uid: null}
 
   	var authData = data.root.getAuth()
+
 		if (authData) {
-			this.setState({
-				isLoggedIn: true,
-				displayName: authData.google.displayName,
-				profileImageURL: authData.google.profileImageURL
-			})
+			this.state = { uid: authData.uid }
 		}
 
-
-		data.root.onAuth(authData => {
-			if (authData) {
-				this.setState({
-					displayName: authData.google.displayName,
-					isLoggedIn: true,
-					profileImageURL: authData.google.profileImageURL
-				})
-			} else {
-				this.resetUser()
-			}
-		})
+		this.onAuthRef = this.onAuthCallback.bind(this)
+		data.root.onAuth(this.onAuthRef)
 	}
 
-	resetUser() {
-		this.setState({ displayName: 'guest', isLoggedIn: false, profileImageURL: null })
+	componentWillUnmount() {
+  	data.root.offAuth(this.onAuthRef)
 	}
 
-	logout() {
-		data.root.unauth()
+	onAuthCallback(authData) {
+		if (authData) {
+			this.setState({ uid: authData.uid })
+		} else {
+  		this.setState({ uid: null })
+		}
 	}
 
   render() {
@@ -45,20 +37,12 @@ export default class App extends React.Component {
 	  			<li className='navbar__item'>
 						<Link className='navbar__link' to='/tournaments'>Tournaments</Link>
 					</li>
-   				{this.state.isLoggedIn ? (
- 					<li className='navbar__item navbar__text'>
-						<div className='navbar__display-name'>
-  						<span>Logged in as </span>
-  	  				<span>{this.state.displayName}</span>
-							&nbsp;
-							<a href='#' onClick={this.logout.bind(this)}>(logout)</a>
-						</div>
-  					<img className='navbar__profile-pic' src={this.state.profileImageURL}></img>
-					</li>
+   				{this.state.uid ? (
+						<UserToolbar uid={this.state.uid} />
 					) : (
-					<li className='navbar__item'>
-						<Link className='navbar__link' to='/login'>Login</Link>
-  	  		</li>
+  					<li className='navbar__item'>
+	  					<Link className='navbar__link' to='/login'>Login</Link>
+  	    		</li>
 					)}
   		  </ul>
       </nav>
