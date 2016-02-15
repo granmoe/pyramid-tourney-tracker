@@ -58,15 +58,15 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _Tournaments = __webpack_require__(217);
+	var _Tournaments = __webpack_require__(218);
 	
 	var _Tournaments2 = _interopRequireDefault(_Tournaments);
 	
-	var _Login = __webpack_require__(219);
+	var _Login = __webpack_require__(220);
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	__webpack_require__(220);
+	__webpack_require__(221);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24047,6 +24047,10 @@
 	
 	var _dataService2 = _interopRequireDefault(_dataService);
 	
+	var _UserToolbar = __webpack_require__(217);
+	
+	var _UserToolbar2 = _interopRequireDefault(_UserToolbar);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24067,46 +24071,30 @@
 		_createClass(App, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				this.clearUser();
+				this.state = { uid: null };
 	
 				var authData = _dataService2.default.root.getAuth();
 	
 				if (authData) {
-					this.setUser(authData);
+					this.state = { uid: authData.uid };
 				}
 	
-				_dataService2.default.root.onAuth(this.onAuthCallback.bind(this));
+				this.onAuthRef = this.onAuthCallback.bind(this);
+				_dataService2.default.root.onAuth(this.onAuthRef);
 			}
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
-				_dataService2.default.root.offAuth(this.onAuthCallback.bind(this));
+				_dataService2.default.root.offAuth(this.onAuthRef);
 			}
 		}, {
 			key: 'onAuthCallback',
 			value: function onAuthCallback(authData) {
 				if (authData) {
-					this.setUser(authData);
+					this.setState({ uid: authData.uid });
 				} else {
-					this.clearUser();
+					this.setState({ uid: null });
 				}
-			}
-		}, {
-			key: 'setUser',
-			value: function setUser(authData) {
-				this.setState({
-					isLoggedIn: true
-				});
-			}
-		}, {
-			key: 'clearUser',
-			value: function clearUser() {
-				this.setState({ isLoggedIn: false });
-			}
-		}, {
-			key: 'logout',
-			value: function logout() {
-				_dataService2.default.root.unauth();
 			}
 		}, {
 			key: 'render',
@@ -24129,20 +24117,7 @@
 									'Tournaments'
 								)
 							),
-							this.state.isLoggedIn ? _react2.default.createElement(
-								'li',
-								{ className: 'navbar__item navbar__text' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'navbar__display-name' },
-									'Logged In  ',
-									_react2.default.createElement(
-										'a',
-										{ href: 'javascript:void(0)', onClick: this.logout.bind(this) },
-										'(logout)'
-									)
-								)
-							) : _react2.default.createElement(
+							this.state.uid ? _react2.default.createElement(_UserToolbar2.default, { uid: this.state.uid }) : _react2.default.createElement(
 								'li',
 								{ className: 'navbar__item' },
 								_react2.default.createElement(
@@ -24175,7 +24150,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 	
 	var _firebase = __webpack_require__(212);
@@ -24196,104 +24171,86 @@
 	var dbRoot = new _firebase2.default('https://pyramid-tourney-tracker.firebaseio.com/test2');window['ref'] = dbRoot; // DEBUGGING
 	var base = _reBase2.default.createClass('https://pyramid-tourney-tracker.firebaseio.com/test2');
 	
-	var profiles = dbRoot.child('profiles');
-	var teams = dbRoot.child('teams');
-	var matches = dbRoot.child('matches');
-	var tournaments = dbRoot.child('tournaments');
-	var snapshot = {};
-	
-	// Keep snapshot current
-	dbRoot.on('value', function (snapshot) {
-	  snapshot = snapshot.val();
-	  window['snap'] = snapshot;
-	  console.log('new data', snapshot);
-	});
-	
-	// Data API
 	var service = {
-	  base: base,
-	  root: dbRoot,
-	  profiles: profiles,
-	  teams: teams,
-	  matches: matches,
-	  tournaments: tournaments
+		base: base,
+		root: dbRoot
 	};
 	
 	service.makeUserAdmin = function (userId) {
-	  // TODO: set user's role: 'admin' (can only be done by an admin)
+		// TODO: set user's role: 'admin' (can only be done by an admin)
 	};
 	
 	service.loginUser = function (userObj) {
-	  return dbRoot.authWithPassword(userObj);
+		return dbRoot.authWithPassword(userObj);
 	};
 	
 	service.createUserAndLogin = function (email, password, displayName) {
-	  var userObj = { email: email, password: password };
+		var userObj = { email: email, password: password };
 	
-	  return dbRoot.createUser(userObj).then(function (_) {
-	    return dbRoot.authWithPassword(userObj);
-	  }).catch(function (error) {
-	    return error;
-	  }).then(function (authData) {
-	    profiles.child(authData.uid).set({
-	      displayName: displayName,
-	      role: 'user',
-	      tournaments: {},
-	      teams: {},
-	      matches: {},
-	      wins: 0,
-	      losses: 0,
-	      ties: 0,
-	      average: 0,
-	      standing: 'none'
-	    });
-	  }).catch(function (error) {
-	    return error;
-	  });
+		return dbRoot.createUser(userObj).then(function (_) {
+			return dbRoot.authWithPassword(userObj);
+		}).catch(function (error) {
+			return error;
+		}).then(function (authData) {
+			profiles.child(authData.uid).set({
+				displayName: displayName,
+				role: 'user',
+				tournaments: {},
+				teams: {},
+				matches: {},
+				wins: 0,
+				losses: 0,
+				ties: 0,
+				average: 0,
+				standing: 'none'
+			});
+		}).catch(function (error) {
+			return error;
+		});
 	};
 	
 	service.addTeam = function (teamName, users) {
-	  // users = team.users schema = { ID: { name: 'bob' }, ID: { name: 'sue' }}
-	  teams.push({
-	    name: teamName,
-	    users: users,
-	    matches: {},
-	    tournaments: {},
-	    wins: 0,
-	    losses: 0,
-	    ties: 0,
-	    average: 0,
-	    standing: 'none'
-	  });
+		// users = team.users schema = { ID: { name: 'bob' }, ID: { name: 'sue' }}
+		teams.push({
+			name: teamName,
+			users: users,
+			matches: {},
+			tournaments: {},
+			wins: 0,
+			losses: 0,
+			ties: 0,
+			average: 0,
+			standing: 'none'
+		});
 	};
 	
 	service.addMatch = function (matchData) {
-	  matches.push(matchData);
+		matches.push(matchData);
 	};
 	
 	service.addTournament = function (tournamentData) {
-	  // name, description, rules
+		// name, description, rules
 	
-	  var defaults = {
-	    // created: string ('mm/dd/yyyy'),
-	    matches: {},
-	    tierStructure: { 0: 1, 1: 3, 2: 5, 3: 8, 4: 12, 5: 20 },
-	    teams: {}
-	  };
+		var defaults = {
+			// created: string ('mm/dd/yyyy'),
+			matches: {},
+			tierStructure: { 0: 1, 1: 3, 2: 5, 3: 8, 4: 12, 5: 20 },
+			teams: {}
+		};
 	
-	  var data = _lodash2.default.extend(defaults, tournamentData);
-	  tournaments.push(data);
+		var data = _lodash2.default.extend(defaults, tournamentData);
+		tournaments.push(data);
 	};
 	
 	service.joinTournament = function (teamID) {
-	  var team = snapshot.teams[teamID];
-	  var exists = !_lodash2.default.isEmpty(team);
-	  var isInTourney = !_lodash2.default.isEmpty(_lodash2.default.get(snapshot, 'tournaments.teams.'[teamId]));
+		var team = snapshot.teams[teamID];
+		var exists = !_lodash2.default.isEmpty(team);
+		var isInTourney = !_lodash2.default.isEmpty(_lodash2.default.get(snapshot, 'tournaments.teams.'[teamId]));
 	
-	  if (!exists || isInTourney) {
-	    return;
-	  }
-	  // add team to tourney
+		if (!exists || isInTourney) {
+			return;
+		}
+		// add team to tourney
 	};
 	
 	window['service'] = service; // DEBUGGING
@@ -39741,7 +39698,92 @@
 	
 	var _dataService2 = _interopRequireDefault(_dataService);
 	
-	var _TourneyCard = __webpack_require__(218);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var base = _dataService2.default.base;
+	
+	var UserToolbar = function (_React$Component) {
+		_inherits(UserToolbar, _React$Component);
+	
+		function UserToolbar() {
+			_classCallCheck(this, UserToolbar);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(UserToolbar).apply(this, arguments));
+		}
+	
+		_createClass(UserToolbar, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				this.state = {};
+				this.ref = base.bindToState('profiles/' + this.props.uid, {
+					context: this,
+					state: 'profile'
+				});
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				base.removeBinding(this.ref);
+			}
+		}, {
+			key: 'logout',
+			value: function logout() {
+				_dataService2.default.root.unauth();
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'li',
+					{ className: 'navbar__item navbar__text' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'navbar__display-name' },
+						'Logged In As ',
+						this.state.profile && this.state.profile.displayName,
+						' ',
+						_react2.default.createElement(
+							'a',
+							{ href: 'javascript:void(0)', onClick: this.logout.bind(this) },
+							'(logout)'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return UserToolbar;
+	}(_react2.default.Component);
+	
+	exports.default = UserToolbar;
+
+/***/ },
+/* 218 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(5);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _dataService = __webpack_require__(211);
+	
+	var _dataService2 = _interopRequireDefault(_dataService);
+	
+	var _TourneyCard = __webpack_require__(219);
 	
 	var _TourneyCard2 = _interopRequireDefault(_TourneyCard);
 	
@@ -39810,7 +39852,7 @@
 	exports.default = Tournaments;
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39872,7 +39914,7 @@
 	exports.default = TourneyCard;
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39890,10 +39932,6 @@
 	var _dataService = __webpack_require__(211);
 	
 	var _dataService2 = _interopRequireDefault(_dataService);
-	
-	var _lodash = __webpack_require__(213);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -39917,7 +39955,8 @@
 				loginSelected: true,
 				displayName: '',
 				email: '',
-				password: ''
+				password: '',
+				errorMessage: ''
 			};
 			return _this;
 		}
@@ -39963,25 +40002,22 @@
 				});
 			}
 		}, {
-			key: 'handleDisplayNameChange',
-			value: function handleDisplayNameChange(e) {
-				this.setState({ displayName: e.target.value });
-			}
-		}, {
-			key: 'handleEmailChange',
-			value: function handleEmailChange(e) {
-				this.setState({ email: e.target.value });
-			}
-		}, {
-			key: 'handlePasswordChange',
-			value: function handlePasswordChange(e) {
-				this.setState({ password: e.target.value });
+			key: 'onInputChange',
+			value: function onInputChange(fieldName, e) {
+				// TODO: Add validation
+				if (fieldName === 'email') {
+					this.setState({ email: e.target.value });
+				} else if (fieldName === 'password') {
+					this.setState({ password: e.target.value });
+				} else if (fieldName === 'displayName') {
+					this.setState({ displayName: e.target.value });
+				}
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				var form;
 				var toggleText;
+				var form;
 				var loginButton;
 	
 				if (this.state.isLoggedIn === false) {
@@ -39989,12 +40025,12 @@
 						'div',
 						{ onClick: this.toggleForm.bind(this), className: 'toggle-button row row-top' },
 						_react2.default.createElement(
-							'span',
+							'div',
 							{ className: this.state.loginSelected ? "active toggle-option" : "toggle-option" },
 							'Login'
 						),
 						_react2.default.createElement(
-							'span',
+							'div',
 							{ className: !this.state.loginSelected ? "active toggle-option" : "toggle-option" },
 							'Register'
 						)
@@ -40010,8 +40046,8 @@
 						form = _react2.default.createElement(
 							'div',
 							{ className: 'login-form' },
-							_react2.default.createElement('input', { className: 'row', onChange: this.handleEmailChange.bind(this), value: this.state.email, name: 'email', type: 'email', placeholder: 'email' }),
-							_react2.default.createElement('input', { className: 'row', onChange: this.handlePasswordChange.bind(this), value: this.state.password, name: 'password', type: 'password', placeholder: 'password' })
+							_react2.default.createElement('input', { className: 'row', name: 'email', onChange: this.onInputChange.bind(this, 'email'), value: this.state.email, type: 'email', placeholder: 'email' }),
+							_react2.default.createElement('input', { className: 'row', name: 'password', onChange: this.onInputChange.bind(this, 'password'), value: this.state.password, type: 'password', placeholder: 'password' })
 						);
 					} else {
 						toggleText = "Login with an existing account";
@@ -40023,17 +40059,17 @@
 						form = _react2.default.createElement(
 							'div',
 							{ className: 'login-form' },
-							_react2.default.createElement('input', { className: 'row', onChange: this.handleEmailChange.bind(this), value: this.state.email, name: 'email', type: 'email', placeholder: 'email' }),
-							_react2.default.createElement('input', { className: 'row', onChange: this.handlePasswordChange.bind(this), value: this.state.password, name: 'password', type: 'password', placeholder: 'password' }),
-							_react2.default.createElement('input', { className: 'row', onChange: this.handleDisplayNameChange.bind(this), value: this.state.displayName, name: 'displayName', type: 'text', placeholder: 'display name' })
+							_react2.default.createElement('input', { className: 'row', name: 'email', onChange: this.onInputChange.bind(this, 'email'), value: this.state.email, type: 'email', placeholder: 'email' }),
+							_react2.default.createElement('input', { className: 'row', name: 'password', onChange: this.onInputChange.bind(this, 'password'), value: this.state.password, type: 'password', placeholder: 'password' }),
+							_react2.default.createElement('input', { className: 'row', name: 'displayName', onChange: this.onInputChange.bind(this, 'displayName'), value: this.state.displayName, type: 'text', placeholder: 'display name' })
 						);
 					}
 	
-					if (this.state.attempts > 0) {
+					if (this.state.errorMessage) {
 						var errorMessage = _react2.default.createElement(
 							'div',
-							{ className: 'login-error-first' },
-							'Please try again'
+							{ className: 'login-error' },
+							this.state.errorMessage
 						);
 					}
 				} else {
@@ -40068,8 +40104,10 @@
 				var attempts = this.state.attempts;
 				this.setState({ attempts: attempts++ });
 	
-				_dataService2.default.loginUser({ email: this.state.email, password: this.state.password }).bind(this).then(function (_) {
-					_this2.setState({ isLoggedIn: true });
+				_dataService2.default.loginUser.bind(this, { email: this.state.email, password: this.state.password })().then(function (_) {
+					_this2.setState({ isLoggedIn: true, errorMessage: '' });
+				}).catch(function (err) {
+					_this2.setState({ errorMessage: err.message || 'Sorry, there was an error. Please try again.' });
 				});
 			}
 		}]);
@@ -40080,16 +40118,16 @@
 	exports.default = Login;
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(221);
+	var content = __webpack_require__(222);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(223)(content, {});
+	var update = __webpack_require__(224)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -40106,21 +40144,21 @@
 	}
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(222)();
+	exports = module.exports = __webpack_require__(223)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, ".navbar {\n  background-color: #00D604;\n  margin: 0;\n  padding: 15px;\n  overflow: hidden;\n}\n.navbar__items {\n  margin: 0;\n  padding: 0;\n}\n.navbar__item {\n  display: inline;\n  padding: 0 15px;\n}\n.navbar__link {\n  color: #fff;\n  font-size: 20px;\n}\n.navbar__text {\n  font-size: 15px;\n  color: #eee;\n}\n.navbar__display-name {\n  position: absolute;\n  top: 17px;\n  right: 55px;\n}\n.navbar__profile-pic {\n  position: absolute;\n  height: 43px;\n  right: 5px;\n  top: 5px;\n}\n.main-header {\n  margin: 15px 30px;\n  font-size: 24px;\n}\n.login-container {\n  margin: 15px 30px;\n  width: 320px;\n}\n.login-container .row {\n  border-top: 1px solid lightgray;\n  border-left: 1px solid lightgray;\n  border-right: 1px solid lightgray;\n  border-bottom: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  box-sizing: border-box;\n  padding: 5px;\n  font-size: 16px;\n  background: #fff;\n  overflow: hidden;\n}\n.login-container .row-top {\n  border-radius: 10px 10px 0 0;\n}\n.login-container .row-bottom {\n  border-bottom: 1px solid lightgray;\n  border-radius: 0 0 10px 10px;\n}\n.login-container .btn-login,\n.login-container .btn-register {\n  text-align: center;\n  background: #00A6ED;\n  color: #fff;\n  font-size: 18px;\n}\n.toggle-button,\n.toggle-button.row {\n  padding: 0;\n}\n.toggle-button .toggle-option,\n.toggle-button.row .toggle-option {\n  background: lightgray;\n  opacity: 0.4;\n  font-size: 18px;\n  display: inline-block;\n  width: 50%;\n  height: 100%;\n  text-align: center;\n}\n.toggle-button .toggle-option.active,\n.toggle-button.row .toggle-option.active {\n  background: #00A6ED;\n  opacity: 1;\n  color: #fff;\n}\n.tourney-list,\n.no-tourneys {\n  margin: 15px 30px;\n}\n.tourney-card {\n  text-align: center;\n}\nbody,\n* {\n  margin: 0;\n  padding: 0;\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 15px;\n}\na {\n  text-decoration: none;\n}\n", ""]);
+	exports.push([module.id, ".navbar {\n  background-color: #00D604;\n  margin: 0;\n  padding: 15px;\n  overflow: hidden;\n}\n.navbar__items {\n  margin: 0;\n  padding: 0;\n}\n.navbar__item {\n  display: inline;\n  padding: 0 15px;\n}\n.navbar__link {\n  color: #fff;\n  font-size: 20px;\n}\n.navbar__text {\n  font-size: 15px;\n  color: #eee;\n}\n.navbar__display-name {\n  position: absolute;\n  top: 17px;\n  right: 55px;\n}\n.navbar__profile-pic {\n  position: absolute;\n  height: 43px;\n  right: 5px;\n  top: 5px;\n}\n.main-header {\n  margin: 15px 30px;\n  font-size: 24px;\n}\n.login-container {\n  margin: 15px 30px;\n  width: 320px;\n}\n.login-container .row {\n  border-top: 1px solid lightgray;\n  border-left: 1px solid lightgray;\n  border-right: 1px solid lightgray;\n  border-bottom: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  box-sizing: border-box;\n  padding: 5px;\n  font-size: 16px;\n  background: #fff;\n  overflow: hidden;\n}\n.login-container .row-top {\n  border-radius: 10px 10px 0 0;\n}\n.login-container .row-bottom {\n  border-bottom: 1px solid lightgray;\n  border-radius: 0 0 10px 10px;\n}\n.login-container .btn-login,\n.login-container .btn-register {\n  text-align: center;\n  background: #00A6ED;\n  color: #fff;\n  font-size: 18px;\n}\n.login-error {\n  color: #F6511D;\n}\n.toggle-button,\n.toggle-button.row {\n  padding: 0;\n  display: table;\n}\n.toggle-button .toggle-option,\n.toggle-button.row .toggle-option,\n.toggle-button .toggle-option.row,\n.toggle-button.row .toggle-option.row {\n  display: table-cell !important;\n  background: lightgray;\n  color: #0D2C54;\n  font-size: 18px;\n  display: inline-block;\n  width: 50%;\n  height: 100%;\n  vertical-align: middle;\n  text-align: center;\n}\n.toggle-button .toggle-option.active,\n.toggle-button.row .toggle-option.active,\n.toggle-button .toggle-option.row.active,\n.toggle-button.row .toggle-option.row.active {\n  background: whitesmoke;\n}\n.tourney-list,\n.no-tourneys {\n  margin: 15px 30px;\n}\n.tourney-card {\n  text-align: center;\n}\nbody,\n* {\n  margin: 0;\n  padding: 0;\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 15px;\n}\na {\n  text-decoration: none;\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports) {
 
 	/*
@@ -40176,7 +40214,7 @@
 
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

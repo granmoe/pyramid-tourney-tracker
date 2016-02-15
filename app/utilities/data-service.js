@@ -47,7 +47,7 @@ service.createUserAndLogin = function (email, password, displayName) {
 }
 
 service.addTeam = function (teamName, users) {
-  // users = team.users schema = { ID: { name: 'bob' }, ID: { name: 'sue' }}
+  // users arg = team.users schema = { ID: { name: 'bob' }, ID: { name: 'sue' }}
   teams.push({
 		name: teamName,
     users: users,
