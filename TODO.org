@@ -112,7 +112,12 @@
 **** Tier Component (Teams)
 ***** Team Component
 * Work on these things first:
-** Login
+** DONE Login
+** Create Team
+** Create Tournament
+** Create match
+** Submit match results
+** Approve match results
 ** Create a data service to write to firebase through
 *** Ensures all redundant records are updated
 ** Enable all basic actions needed
@@ -122,9 +127,11 @@
 *** approve match results added by opponents
 *** update all stats accordingly
 * Enhancements
+** After login, show user's pending match results and active tourneys
 ** Activity Feed Widget
 ** Other user must accept request to be on a team
 ** Can only play teams in their tier and adjacent tiers
 ** Error message if same team tries to join tourney again
 ** Don't allow a user to have multiple teams in the same tourney
 
+https://console.cloud.google.com/apis/credentials?project=pyramid-tourney-tracker

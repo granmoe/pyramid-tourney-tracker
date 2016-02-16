@@ -37,6 +37,9 @@ export default class App extends React.Component {
 	  			<li className='navbar__item'>
 						<Link className='navbar__link' to='/tournaments'>Tournaments</Link>
 					</li>
+	  			<li className='navbar__item'>
+							<Link className='navbar__link' to='/teams'>Teams</Link>
+					</li>
    				{this.state.uid ? (
 						<UserToolbar uid={this.state.uid} />
 					) : (

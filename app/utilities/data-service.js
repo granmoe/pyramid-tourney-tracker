@@ -2,13 +2,17 @@ import firebase from 'firebase'
 import _ from 'lodash'
 import rebase from 're-base'
 
-// var dbRoot = new firebase('https://pyramid-tourney-tracker.firebaseio.com/prod')
-var dbRoot = new firebase('https://pyramid-tourney-tracker.firebaseio.com/test2'); window['ref'] = dbRoot // DEBUGGING
+// var root = new firebase('https://pyramid-tourney-tracker.firebaseio.com/prod')
+var root = new firebase('https://pyramid-tourney-tracker.firebaseio.com/test2'); window['ref'] = root // DEBUGGING
 var base = rebase.createClass('https://pyramid-tourney-tracker.firebaseio.com/test2')
 
 var service = {
 	base: base,
-	root: dbRoot
+	root: root
+}
+
+service.isLoggedIn = function () {
+	return !(root.getAuth() === null)
 }
 
 service.makeUserAdmin = function (userId) {
@@ -16,15 +20,15 @@ service.makeUserAdmin = function (userId) {
 }
 
 service.loginUser = function (userObj) {
-	return dbRoot.authWithPassword(userObj)
+	return root.authWithPassword(userObj)
 }
 
 service.createUserAndLogin = function (email, password, displayName) {
 	var userObj = { email: email, password: password }
 
-  return dbRoot.createUser(userObj)
+  return root.createUser(userObj)
     .then( _ => {
-			return dbRoot.authWithPassword(userObj)
+			return root.authWithPassword(userObj)
 	  })
     .catch( error => { return error })
 	  .then(function (authData) {

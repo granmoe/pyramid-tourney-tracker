@@ -5,14 +5,10 @@ var base = data.base
 export default class UserToolbar extends React.Component {
 	componentWillMount () {
 		this.state = {}
-		this.ref = base.bindToState('profiles/' + this.props.uid, {
+		this.dataStream = base.bindToState('profiles/' + this.props.uid, {
 			context: this,
 			state: 'profile'
 		})
-	}
-
-	componentWillUnmount () {
-		base.removeBinding(this.ref)
 	}
 
 	logout() {
@@ -29,6 +25,10 @@ export default class UserToolbar extends React.Component {
 				</div>
 			</li>
 		)
+	}
+
+	componentWillUnmount () {
+		base.removeBinding(this.dataStream)
 	}
 }
 
