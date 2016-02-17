@@ -5,7 +5,7 @@ var base = data.base
 export default class Teams extends React.Component {
 	constructor (props) {
 		super(props)
-		this.state = { teams: [] }
+		this.state = { teams: [], formOpen: false }
 	}
 
 	componentDidMount () {
@@ -30,10 +30,24 @@ export default class Teams extends React.Component {
 		return <div className='teams'>
 			<div>
 				<div className='teams__header'>Teams</div>
-				<div className='teams__create-button'><span>+</span> Create New Team</div>
+				{this.state.formOpen ? (
+					<div>
+					<div onClick={this.onClickCreate.bind(this)} className='teams__create-button'>Create New Team <span>-</span></div>
+  				<form className='teams__create-form'>
+					  The form will go here
+					</form>
+					</div>
+				) : (
+					<div onClick={this.onClickCreate.bind(this)} className='teams__create-button'>Create New Team <span>+</span></div>
+				)}
 			</div>
 			<div className='teams__list'>{teams}</div>
 		</div>
+	}
+
+	onClickCreate (e) {
+		e.preventDefault()
+		this.setState({ formOpen: !this.state.formOpen })
 	}
 
 	componentWillUnmount () {
