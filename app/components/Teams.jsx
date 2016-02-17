@@ -32,13 +32,17 @@ export default class Teams extends React.Component {
 				<div className='teams__header'>Teams</div>
 				{this.state.formOpen ? (
 					<div>
-					<div onClick={this.onClickCreate.bind(this)} className='teams__create-button'>Create New Team <span>-</span></div>
+					<div onClick={this.onClickCreate.bind(this)} className='teams__create-button'>Create New Team</div>
+					<i className='material-icons'>remove</i>
   				<form className='teams__create-form'>
 					  The form will go here
 					</form>
 					</div>
 				) : (
-					<div onClick={this.onClickCreate.bind(this)} className='teams__create-button'>Create New Team <span>+</span></div>
+					<div>
+					<div onClick={this.onClickCreate.bind(this)} className='teams__create-button'>Create New Team</div>
+					<i className='material-icons'>add</i>
+					</div>
 				)}
 			</div>
 			<div className='teams__list'>{teams}</div>

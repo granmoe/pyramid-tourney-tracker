@@ -40679,7 +40679,7 @@
 	
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Teams).call(this, props));
 	
-			_this.state = { teams: [] };
+			_this.state = { teams: [], formOpen: false };
 			return _this;
 		}
 	
@@ -40720,15 +40720,37 @@
 							{ className: 'teams__header' },
 							'Teams'
 						),
-						_react2.default.createElement(
+						this.state.formOpen ? _react2.default.createElement(
 							'div',
-							{ className: 'teams__create-button' },
+							null,
 							_react2.default.createElement(
-								'span',
-								null,
-								'+'
+								'div',
+								{ onClick: this.onClickCreate.bind(this), className: 'teams__create-button' },
+								'Create New Team'
 							),
-							' Create New Team'
+							_react2.default.createElement(
+								'i',
+								{ className: 'material-icons' },
+								'remove'
+							),
+							_react2.default.createElement(
+								'form',
+								{ className: 'teams__create-form' },
+								'The form will go here'
+							)
+						) : _react2.default.createElement(
+							'div',
+							null,
+							_react2.default.createElement(
+								'div',
+								{ onClick: this.onClickCreate.bind(this), className: 'teams__create-button' },
+								'Create New Team'
+							),
+							_react2.default.createElement(
+								'i',
+								{ className: 'material-icons' },
+								'add'
+							)
 						)
 					),
 					_react2.default.createElement(
@@ -40737,6 +40759,12 @@
 						teams
 					)
 				);
+			}
+		}, {
+			key: 'onClickCreate',
+			value: function onClickCreate(e) {
+				e.preventDefault();
+				this.setState({ formOpen: !this.state.formOpen });
 			}
 		}, {
 			key: 'componentWillUnmount',
@@ -40806,12 +40834,13 @@
 					this.setUser();
 				}
 	
-				_dataService2.default.root.onAuth(this.onAuthCallback.bind(this));
+				this.authRef = this.onAuthCallback.bind(this);
+				_dataService2.default.root.onAuth(this.authRef);
 			}
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
-				_dataService2.default.root.offAuth(this.onAuthCallback.bind(this));
+				_dataService2.default.root.offAuth(this.authRef);
 			}
 		}, {
 			key: 'onAuthCallback',
