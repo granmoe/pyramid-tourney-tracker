@@ -1,6 +1,6 @@
 import React from 'react'
-import data from '../utilities/data-service.js'
-var base = data.base
+import { base } from '../utilities/data-service.js'
+import TeamForm from './TeamForm.jsx'
 
 export default class Teams extends React.Component {
 	constructor (props) {
@@ -27,31 +27,14 @@ export default class Teams extends React.Component {
 			})
 		}
 
+// TODO: make a form component that can be used for any form
 		return <div className='teams'>
 			<div>
 				<div className='teams__header'>Teams</div>
-				{this.state.formOpen ? (
-					<div>
-					<div onClick={this.onClickCreate.bind(this)} className='teams__create-button'>Create New Team</div>
-					<i className='material-icons'>remove</i>
-  				<form className='teams__create-form'>
-					  The form will go here
-					</form>
-					</div>
-				) : (
-					<div>
-					<div onClick={this.onClickCreate.bind(this)} className='teams__create-button'>Create New Team</div>
-					<i className='material-icons'>add</i>
-					</div>
-				)}
 			</div>
+      <TeamForm />
 			<div className='teams__list'>{teams}</div>
 		</div>
-	}
-
-	onClickCreate (e) {
-		e.preventDefault()
-		this.setState({ formOpen: !this.state.formOpen })
 	}
 
 	componentWillUnmount () {

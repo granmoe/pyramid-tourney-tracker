@@ -7,7 +7,6 @@ var root = new firebase('https://pyramid-tourney-tracker.firebaseio.com/test2');
 var base = rebase.createClass('https://pyramid-tourney-tracker.firebaseio.com/test2')
 
 var service = {
-	base: base,
 	root: root
 }
 
@@ -94,4 +93,4 @@ service.joinTournament = function (teamID) {
 }
 
 window['service'] = service // DEBUGGING
-export default service
+export { service as default, base }

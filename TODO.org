@@ -113,9 +113,12 @@
 ***** Team Component
 * Work on these things first:
 ** DONE Login
+*** Don't allow displayName duplicates
+** Enable routes in dev-server for hot reload
 ** Create Team
 ** Create Tournament
 ** Create match
+** Streamlined flow from create user, create team, join tournament
 ** Submit match results
 ** Approve match results
 ** Create a data service to write to firebase through

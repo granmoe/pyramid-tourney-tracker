@@ -1,5 +1,13 @@
 .teams {
-   margin: 15px 30px;
+  margin: 15px 30px;
+
+	&__create-form {
+	  margin-top: 15px;
+		padding: 10px;
+		width: 500px;
+		border-radius: 5px;
+		border: 1px solid @darkBlue;
+	}
 
 	&__header {
 		display: inline-block;
@@ -9,21 +17,52 @@
 
 	&__create-button {
 		cursor: pointer;
-		display: inline-block;
-		margin-left: 25px;
-		padding: 10px;
 		overflow: hidden;
-		border-radius: 5px;
-		border: 1px solid @orange;
-		color: @orange;
+		color: @darkBlue;
 
 		&:hover {
-			background-color: @blue;
+			color: @blue;
 		}
 
 		span {
-
+			vertical-align: middle;
 		}
+	}
+
+	&__collapse-icon {
+		float: right;
+
+	}
+
+  &__team-name {
+    padding: 5px;
+    font-size: 15px;
+  }
+
+  &__select-user {
+		padding-right: 2.5em; /* accommodate with the pseudo elements for the dropdown arrow */
+		border: 0;
+		border-radius: 3px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+    margin-left: 15px;
+    font-size: 20px;
+  }
+
+  &__select-user:after, &__select-user:before {
+    content: '';
+    position: absolute;
+  }
+
+  &__select-user:after {
+		content: "\25BC";
+		height: 1em;
+		font-size: .625em;
+		line-height: 1;
+		right: 1.2em;
+		top: 50%;
+    margin-top: -.5em;
 	}
 
 	&__list {
