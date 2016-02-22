@@ -3,15 +3,17 @@ const merge = require('webpack-merge')
 const webpack = require('webpack')
 
 const ENV = process.env.NODE_ENV
+process.env.BABEL_ENV = ENV
+
+console.log("ENV", ENV)
+console.log("HOST", process.env.HOST)
+console.log("PORT", process.env.PORT)
+
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build')
 }
 
-process.env.BABEL_ENV = ENV
-console.log("ENV", ENV)
-console.log("HOST", process.env.HOST)
-console.log("PORT", process.env.PORT)
 const common = {
   entry: PATHS.app,
   resolve: {
@@ -39,7 +41,7 @@ const common = {
 if(ENV === 'develop' || !ENV) {
   module.exports = merge(common, {
     entry: ['webpack-hot-middleware/client', PATHS.app],
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
     plugins: [
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),

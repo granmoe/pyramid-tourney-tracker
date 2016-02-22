@@ -15,7 +15,7 @@
 		font-size: 25px;
 	}
 
-	&__create-button {
+	&__collapse-button {
 		cursor: pointer;
 		overflow: hidden;
 		color: @darkBlue;
@@ -34,36 +34,34 @@
 
 	}
 
+  &__create-team {
+    display: block;
+    margin-top: 10px;
+    padding: 5px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    font-size: 17px;
+    vertical-align: middle;
+    color: #fff;
+    background-color: @blue;
+    border-radius: 5px;
+    &[disabled] {
+      background-color: gray;
+    }
+  }
+
   &__team-name {
+    border-radius: 5px;
     padding: 5px;
     font-size: 15px;
   }
 
   &__select-user {
-		padding-right: 2.5em; /* accommodate with the pseudo elements for the dropdown arrow */
-		border: 0;
-		border-radius: 3px;
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
     margin-left: 15px;
-    font-size: 20px;
+    width: 100px;
+    border-radius: 5px;
   }
-
-  &__select-user:after, &__select-user:before {
-    content: '';
-    position: absolute;
-  }
-
-  &__select-user:after {
-		content: "\25BC";
-		height: 1em;
-		font-size: .625em;
-		line-height: 1;
-		right: 1.2em;
-		top: 50%;
-    margin-top: -.5em;
-	}
 
 	&__list {
 		margin-top: 15px;

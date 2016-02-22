@@ -1,5 +1,5 @@
 import React from 'react'
-import { base } from '../utilities/data-service.js'
+import base from '../utilities/rebase-service.js'
 import TourneyCard from './TourneyCard.jsx'
 
 export default class Tournaments extends React.Component {

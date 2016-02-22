@@ -1,5 +1,6 @@
 import React from 'react'
-import { base } from '../utilities/data-service.js'
+import data from '../utilities/data-service.js'
+import base from '../utilities/rebase-service.js'
 
 export default class UserToolbar extends React.Component {
 	componentWillMount () {

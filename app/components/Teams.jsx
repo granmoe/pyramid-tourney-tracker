@@ -1,19 +1,27 @@
 import React from 'react'
-import { base } from '../utilities/data-service.js'
+import dataService from '../utilities/data-service.js'
+import base from '../utilities/rebase-service.js'
 import TeamForm from './TeamForm.jsx'
 
 export default class Teams extends React.Component {
 	constructor (props) {
 		super(props)
-		this.state = { teams: [], formOpen: false }
+		this.state = { teams: [], profile: {}, formOpen: false, userid: '', username: '' }
 	}
 
 	componentDidMount () {
-		this.dataStream = base.bindToState('teams', {
+		this.teamsStream = base.bindToState('teams', {
 			context: this,
 			state: 'teams',
 			asArray: true
 		})
+
+// TODO: usertoolbar is already listening to this endpoint...need to find a way to user the same
+// endpoint for two separate components
+//    this.profileStream = base.bindToState('profiles/' + this.props.route.uid, {
+//		  context: this,
+//		  state: 'profile'
+//	  })
 	}
 
 	render () {
@@ -27,17 +35,17 @@ export default class Teams extends React.Component {
 			})
 		}
 
-// TODO: make a form component that can be used for any form
 		return <div className='teams'>
 			<div>
 				<div className='teams__header'>Teams</div>
 			</div>
-      <TeamForm />
+      <TeamForm userid='TODO' username='TODO' />
 			<div className='teams__list'>{teams}</div>
 		</div>
 	}
 
 	componentWillUnmount () {
-		base.removeBinding(this.dataStream)
+		base.removeBinding(this.teamsStream)
+		base.removeBinding(this.profileStream)
 	}
 }

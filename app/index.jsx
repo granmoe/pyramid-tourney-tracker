@@ -23,12 +23,22 @@ function requireAuth(nextState, replace) {
 	}
 }
 
+var userid
+
+data.root.onAuth( authData => {
+  if (authData) {
+    userid = authData.uid
+  } else {
+    userid = null
+  }
+})
+
 render(
   <Router history={browserHistory}>
     <Route path='/' component={App}>
 			<Route path='tournaments' component={Tournaments} />
 			<Route path='login' component={Login} />
-			<Route path='teams' component={Teams} onEnter={requireAuth} />
+			<Route path='teams' component={Teams} onEnter={requireAuth} uid={userid} />
     </Route>
   </Router>
 , document.getElementById('app'))
