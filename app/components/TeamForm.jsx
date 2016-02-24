@@ -36,7 +36,7 @@ export default class TeamForm extends React.Component {
     if (this.state.formOpen) {
       collapseIcon = 'remove'
 
-      options = this.state.profiles.map( profile => {
+      options = this.state.profiles.map( (profile, key) => {
         return <option key={profile.key} data-username={profile.displayName} value={profile.key}>{profile.displayName}</option>
       })
 
@@ -68,11 +68,10 @@ export default class TeamForm extends React.Component {
 
   createTeam () {
     var users = {}
-//      this.props.uid: { name: this.props.username },
- //     this.state.teamMateId: { name: this.state.teamMateName }
-  //  }
+    users[this.props.userid] = { name: this.props.username },
+    users[this.state.teamMateId] = { name: this.state.teamMateName }
 
-//    dataService.createTeam(this.state.teamName, users)
+    dataService.createTeam(this.state.teamName, users)
   }
 
   onSelectChange (e) {

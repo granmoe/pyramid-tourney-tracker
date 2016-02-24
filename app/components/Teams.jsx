@@ -6,7 +6,7 @@ import TeamForm from './TeamForm.jsx'
 export default class Teams extends React.Component {
 	constructor (props) {
 		super(props)
-		this.state = { teams: [], profile: {}, formOpen: false, userid: '', username: '' }
+		this.state = { teams: [], profile: {}, formOpen: false, userid: props.route.uid, username: '' }
 	}
 
 	componentDidMount () {
@@ -16,12 +16,10 @@ export default class Teams extends React.Component {
 			asArray: true
 		})
 
-// TODO: usertoolbar is already listening to this endpoint...need to find a way to user the same
-// endpoint for two separate components
-//    this.profileStream = base.bindToState('profiles/' + this.props.route.uid, {
-//		  context: this,
-//		  state: 'profile'
-//	  })
+    this.profileStream = base.bindToState('profiles/' + this.state.userid, {
+		  context: this,
+		  state: 'profile'
+	  })
 	}
 
 	render () {
@@ -39,7 +37,7 @@ export default class Teams extends React.Component {
 			<div>
 				<div className='teams__header'>Teams</div>
 			</div>
-      <TeamForm userid='TODO' username='TODO' />
+      <TeamForm userid={this.state.userid} username={this.state.profile.displayName} />
 			<div className='teams__list'>{teams}</div>
 		</div>
 	}
