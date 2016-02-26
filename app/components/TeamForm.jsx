@@ -1,4 +1,5 @@
 import React from 'react'
+import data from '../utilities/data-service.js'
 import base from '../utilities/rebase-service.js'
 
 export default class TeamForm extends React.Component {
@@ -68,10 +69,10 @@ export default class TeamForm extends React.Component {
 
   createTeam () {
     var users = {}
-    users[this.props.userid] = { name: this.props.username },
-    users[this.state.teamMateId] = { name: this.state.teamMateName }
+    users[this.props.userid] = { displayName: this.props.username }
+    users[this.state.teamMateId] = { displayName: this.state.teamMateName }
 
-    dataService.createTeam(this.state.teamName, users)
+    data.createTeam(this.state.teamName, users)
   }
 
   onSelectChange (e) {

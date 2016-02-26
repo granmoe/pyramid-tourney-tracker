@@ -41,7 +41,7 @@ const common = {
 if(ENV === 'develop' || !ENV) {
   module.exports = merge(common, {
     entry: ['webpack-hot-middleware/client', PATHS.app],
-    devtool: 'source-map',
+    devtool: '#inline-source-map',
     plugins: [
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),

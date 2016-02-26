@@ -2,6 +2,7 @@ import React from 'react'
 import dataService from '../utilities/data-service.js'
 import base from '../utilities/rebase-service.js'
 import TeamForm from './TeamForm.jsx'
+import TeamCard from './TeamCard.jsx'
 
 export default class Teams extends React.Component {
 	constructor (props) {
@@ -28,8 +29,8 @@ export default class Teams extends React.Component {
 		if (!this.state.teams.length) {
 			teams = <div className='teams__none'>No Teams Found </div>
 		} else {
-			teams = this.state.teams.map( (tourney, key) => {
-				return <TeamCard className='teams__card' key={key} tourney={tourney} />
+			teams = this.state.teams.map( (team, key) => {
+				return <TeamCard key={key} {...team} />
 			})
 		}
 

@@ -6,16 +6,15 @@ class service {
 	  this.root = new firebase('https://pyramid-tourney-tracker.firebaseio.com/test2')
 // = new firebase('https://pyramid-tourney-tracker.firebaseio.com/prod')
     this.profiles = this.root.child('profiles')
-// window['service'] = this
+    this.teams = this.root.child('teams')
   }
 
   isLoggedIn () {
 	  return !(this.root.getAuth() === null)
   }
 
-  makeUserAdmin (userId) {
-		// TODO: set user's role: 'admin' (can only be done by an admin)
-  }
+	// TODO: set user's role: 'admin' (can only be done by an admin)
+  makeUserAdmin (userId) {}
 
   loginUser (userObj) {
 	  return this.root.authWithPassword(userObj)
@@ -49,8 +48,8 @@ class service {
   }
 
   createTeam (teamName, users) {
-    // users arg = team.users schema = { ID: { name: 'bob' }, ID: { name: 'sue' }}
-    teams.push({
+    // users = team.users schema = { ID: { name: 'bob' }, ID: { name: 'sue' }}
+    this.teams.push({
 		  name: teamName,
       users: users,
       matches: {},

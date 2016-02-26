@@ -19,7 +19,7 @@ export default class UserToolbar extends React.Component {
 		return (
 			<li className='navbar__item navbar__text'>
 				<div className='navbar__display-name'>
-					Logged In As {this.state.profile && this.state.profile.displayName}
+					Logged in as {this.state.profile && this.state.profile.displayName}
 				  &nbsp;
 					<a href='javascript:void(0)' onClick={this.logout.bind(this)}>(logout)</a>
 				</div>
