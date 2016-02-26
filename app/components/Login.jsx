@@ -21,11 +21,12 @@ export default class Login extends React.Component {
 			this.setUser()
 		}
 
-		data.root.onAuth(this.onAuthCallback.bind(this))
+		this.authRef = this.onAuthCallback.bind(this)
+		data.root.onAuth(this.authRef)
 	}
 
 	componentWillUnmount() {
-		data.root.offAuth(this.onAuthCallback.bind(this))
+		data.root.offAuth(this.authRef)
 	}
 
 	onAuthCallback(authData) {
@@ -121,7 +122,7 @@ export default class Login extends React.Component {
 		var attempts = this.state.attempts
 		this.setState({ attempts: attempts++ })
 
-		data.loginUser.bind(this, { email: this.state.email, password: this.state.password })()
+		data.loginUser({ email: this.state.email, password: this.state.password })
 		  .then( _ => {
 				this.setState({ isLoggedIn: true, errorMessage: '' })
 			})

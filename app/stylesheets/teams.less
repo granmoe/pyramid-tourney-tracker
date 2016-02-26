@@ -1,0 +1,75 @@
+.teams {
+  margin: 15px 30px;
+
+	&__create-form {
+	  margin-top: 15px;
+		padding: 10px;
+		width: 500px;
+		border-radius: 5px;
+		border: 1px solid @darkBlue;
+	}
+
+	&__header {
+		display: inline-block;
+    vertical-align: top;
+		font-size: 25px;
+	}
+
+	&__collapse-button {
+		cursor: pointer;
+		overflow: hidden;
+		color: @darkBlue;
+
+		&:hover {
+			color: @blue;
+		}
+
+		span {
+			vertical-align: middle;
+		}
+	}
+
+	&__collapse-icon {
+		float: right;
+
+	}
+
+  &__create-team {
+    display: block;
+    margin-top: 10px;
+    padding: 5px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    font-size: 17px;
+    vertical-align: middle;
+    color: #fff;
+    background-color: @blue;
+    border-radius: 5px;
+    &[disabled] {
+      background-color: gray;
+    }
+  }
+
+  &__team-name {
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 15px;
+  }
+
+  &__select-user {
+    margin-left: 15px;
+    width: 100px;
+    border-radius: 5px;
+  }
+
+	&__list {
+		margin-top: 15px;
+	}
+
+	&__none {
+	}
+
+	&__card {
+	}
+}

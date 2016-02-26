@@ -1,7 +1,6 @@
 import React from 'react'
-import data from '../utilities/data-service.js'
+import base from '../utilities/rebase-service.js'
 import TourneyCard from './TourneyCard.jsx'
-var base = data.base
 
 export default class Tournaments extends React.Component {
 	constructor (props) {
