@@ -112,29 +112,22 @@
 **** Tier Component (Teams)
 ***** Team Component
 * Work on these things first:
-** DONE Login
-*** Don't allow displayName duplicates
-** Enable routes in dev-server for hot reload
-** Create Team
+** Don't allow displayName duplicates when registering
+** Prevent duplicate team names
 ** Create Tournament
-** Create match
-** Streamlined flow from create user, create team, join tournament
+** Join Tournament
+*** add team to tourney if it is one of your teams
+*** can only join if you don't already have a team in tourney
+** Create / request match
 ** Submit match results
 ** Approve match results
-** Create a data service to write to firebase through
-*** Ensures all redundant records are updated
-** Enable all basic actions needed
-*** add user, team, tourney, match
-*** add team to tourney if it is one of your teams
-*** request a match with another team in the tourney
-*** approve match results added by opponents
-*** update all stats accordingly
+** Ensure all redundant records are updated (esp stats duplicated all over)
 * Enhancements
+** Streamlined flow from create user, create team, join tournament
 ** After login, show user's pending match results and active tourneys
 ** Activity Feed Widget
 ** Other user must accept request to be on a team
 ** Can only play teams in their tier and adjacent tiers
 ** Error message if same team tries to join tourney again
-** Don't allow a user to have multiple teams in the same tourney
-
-https://console.cloud.google.com/apis/credentials?project=pyramid-tourney-tracker
+* Misc
+** https://console.cloud.google.com/apis/credentials?project=pyramid-tourney-tracker

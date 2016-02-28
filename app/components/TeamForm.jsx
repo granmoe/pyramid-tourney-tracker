@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import data from '../utilities/data-service.js'
 import base from '../utilities/rebase-service.js'
 
@@ -37,9 +38,11 @@ export default class TeamForm extends React.Component {
     if (this.state.formOpen) {
       collapseIcon = 'remove'
 
-      options = this.state.profiles.map( (profile, key) => {
+      options = _(this.state.profiles).reject( profile => {
+        return profile.key === this.props.userid
+      }).map( profile => {
         return <option key={profile.key} data-username={profile.displayName} value={profile.key}>{profile.displayName}</option>
-      })
+      }).value()
 
       if (!this.state.teamName || !this.state.teamMateId) { isDisabled = true }
       formFields = <div>
@@ -56,7 +59,7 @@ export default class TeamForm extends React.Component {
     }
 
     return (
- 			<form className='teams__create-form'>
+ 			<form action="" className='teams__create-form'>
 				<div onClick={this.onClickCreate.bind(this)} className='teams__collapse-button'>
 					<span>Create New Team</span>
 					<i className='material-icons teams__collapse-icon'>{collapseIcon}</i>
@@ -67,7 +70,9 @@ export default class TeamForm extends React.Component {
     )
   }
 
-  createTeam () {
+  createTeam (e) {
+    e.preventDefault()
+
     var users = {}
     users[this.props.userid] = { displayName: this.props.username }
     users[this.state.teamMateId] = { displayName: this.state.teamMateName }
