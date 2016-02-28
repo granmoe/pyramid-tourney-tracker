@@ -25,6 +25,7 @@ export default class Teams extends React.Component {
 
 	render () {
 		var teams
+    var teamNames = this.state.teams.map( team => { return team.name })
 
 		if (!this.state.teams.length) {
 			teams = <div className='teams__none'>No Teams Found </div>
@@ -38,7 +39,7 @@ export default class Teams extends React.Component {
 			<div>
 				<div className='teams__header'>Teams</div>
 			</div>
-      <TeamForm userid={this.state.userid} username={this.state.profile.displayName} />
+      <TeamForm teamNames={teamNames} userid={this.state.userid} username={this.state.profile.displayName} />
 			<div className='teams__list'>{teams}</div>
 		</div>
 	}

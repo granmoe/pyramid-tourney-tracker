@@ -6,7 +6,7 @@ import base from '../utilities/rebase-service.js'
 export default class TeamForm extends React.Component {
 	constructor (props) {
 		super(props)
-	  this.state = { profiles: [], formOpen: false }
+	  this.state = { profiles: [], formOpen: false, isDuplicate: false }
 	}
 
 	componentDidMount () {
@@ -33,6 +33,7 @@ export default class TeamForm extends React.Component {
     var collapseIcon
     var options
     var submitButton
+    var errorMessage
     var isDisabled
 
     if (this.state.formOpen) {
@@ -44,7 +45,12 @@ export default class TeamForm extends React.Component {
         return <option key={profile.key} data-username={profile.displayName} value={profile.key}>{profile.displayName}</option>
       }).value()
 
-      if (!this.state.teamName || !this.state.teamMateId) { isDisabled = true }
+      if (!this.state.teamName || !this.state.teamMateId || this.state.isDuplicate) { isDisabled = true }
+
+      if (this.state.isDuplicate) {
+        errorMessage = <div>Sorry, that team name is already taken! Be a little more original.<br /><br /></div>
+      }
+
       formFields = <div>
 	  			<input className='teams__team-name' name='teamName' onChange={this.onInputChange.bind(this, 'teamName')} value={this.state.teamName} type='text' placeholder='team name' />
           <select className='teams__select-user' onChange={this.onSelectChange.bind(this)}>
@@ -64,6 +70,7 @@ export default class TeamForm extends React.Component {
 					<span>Create New Team</span>
 					<i className='material-icons teams__collapse-icon'>{collapseIcon}</i>
 				</div>
+        {errorMessage}
         {formFields}
         {submitButton}
 			</form>
@@ -78,6 +85,8 @@ export default class TeamForm extends React.Component {
     users[this.state.teamMateId] = { displayName: this.state.teamMateName }
 
     data.createTeam(this.state.teamName, users)
+
+    this.state.teamName = '' // todo: create a method to reset the form
   }
 
   onSelectChange (e) {
@@ -95,6 +104,16 @@ export default class TeamForm extends React.Component {
 	onInputChange (fieldName, e) {
 		if (fieldName === 'teamName') {
 			this.setState({ teamName : e.target.value })
+
+      this.checkForDuplicates(e.target.value)
 	  }
 	}
+
+  checkForDuplicates (name) {
+    if (_.includes(this.props.teamNames, name)) {
+      this.setState({ isDuplicate: true })
+    } else {
+      this.setState({ isDuplicate: false })
+    }
+  }
 }
