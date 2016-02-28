@@ -112,7 +112,6 @@
 **** Tier Component (Teams)
 ***** Team Component
 * Work on these things first:
-** Don't allow displayName duplicates when registering
 ** Create Tournament
 ** Join Tournament
 *** add team to tourney if it is one of your teams
