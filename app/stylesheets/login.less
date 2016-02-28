@@ -3,56 +3,60 @@
 	width: 320px;
 
 	.row {
-			border-top: 1px solid lightgray;
-			border-left: 1px solid lightgray;
-			border-right: 1px solid lightgray;
-			border-bottom: 0;
-			display: block;
-			width: 100%;
-			height: 40px;
-			box-sizing: border-box;
-			padding: 5px;
-			font-size: 16px;
-			background: #fff;
-			overflow: hidden;
-			&-top {
-					border-radius: 10px 10px 0 0;
-			}
-			&-bottom {
-					border-bottom: 1px solid lightgray;
-					border-radius: 0 0 10px 10px;
-			}
+		border-top: 1px solid lightgray;
+		border-left: 1px solid lightgray;
+		border-right: 1px solid lightgray;
+		border-bottom: 0;
+		display: block;
+		width: 100%;
+		height: 40px;
+		box-sizing: border-box;
+		padding: 5px;
+		font-size: 16px;
+		background: #fff;
+		overflow: hidden;
+		&-top {
+			border-radius: 10px 10px 0 0;
+		}
+		&-bottom {
+			border-bottom: 1px solid lightgray;
+			border-radius: 0 0 10px 10px;
+		}
 	}
 
 	.btn-login, .btn-register {
-			text-align: center;
-			background: @blue;
-			color: #fff;
-			font-size: 18px;
+		text-align: center;
+		background: @blue;
+		color: #fff;
+		font-size: 18px;
+
+    &[disabled] {
+      background-color: gray;
+    }
 	}
 }
 
 .login-error {
-		color: @red;
+	color: @red;
 }
 
 .toggle-button, .toggle-button.row {
-		padding: 0;
-		display: table;
+	padding: 0;
+	display: table;
 
-	 .toggle-option, .toggle-option.row {
-			 display: table-cell !important;
-       background: lightgray;
-			 color: @darkBlue;
-       font-size: 18px;
-			 display: inline-block;
-			 width: 50%;
-			 height: 100%;
-			 vertical-align: middle;
-			 text-align: center;
+  .toggle-option, .toggle-option.row {
+  	display: table-cell !important;
+    background: lightgray;
+		color: @darkBlue;
+    font-size: 18px;
+		display: inline-block;
+		width: 50%;
+		height: 100%;
+		vertical-align: middle;
+		text-align: center;
 
-			 &.active {
-					 background: whitesmoke;
-			 }
+		&.active {
+		  background: whitesmoke;
 		}
+	}
 }

@@ -122,6 +122,7 @@
 ** Approve match results
 ** Ensure all redundant records are updated (esp stats duplicated all over)
 * Enhancements
+** on logout, redirect to login...or maybe onauth change callback should handle this?
 ** Streamlined flow from create user, create team, join tournament
 ** After login, show user's pending match results and active tourneys
 ** Activity Feed Widget

@@ -5,7 +5,7 @@ import UserToolbar from './UserToolbar.jsx'
 
 export default class App extends React.Component {
 	componentWillMount () {
-    this.state = { uid: null}
+    this.state = { uid: null }
 
   	var authData = data.root.getAuth()
 

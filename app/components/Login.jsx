@@ -11,7 +11,8 @@ export default class Login extends React.Component {
 			displayName: '',
 			email: '',
 			password: '',
-			errorMessage: ''
+			errorMessage: '',
+      isDuplicate: false
 		}
 	}
 
@@ -58,13 +59,24 @@ export default class Login extends React.Component {
 			this.setState({ password : e.target.value })
 		} else if (fieldName === 'displayName') {
 			this.setState({ displayName : e.target.value })
+      this.checkForDuplicates(e.target.value)
 	  }
 	}
+
+  checkForDuplicates (name) {
+    if (_.includes(this.props.displayNames, name)) {
+      this.setState({ isDuplicate: true })
+    } else {
+      this.setState({ isDuplicate: false })
+    }
+  }
 
 	render() {
    	var toggleText
     var form
 		var loginButton
+    var duplicateErrorMessage
+    var isDisabled
 
 		if (this.state.isLoggedIn === false) {
 			var toggleButton =
@@ -75,15 +87,23 @@ export default class Login extends React.Component {
 
 			if (this.state.loginSelected) {
 				toggleText = "Register a new account"
-  			loginButton = <a href="javascript:void(0)" onClick={this.login.bind(this)} className="btn btn-login row row-bottom">Login</a>
+        isDisabled = (!this.state.email || !this.state.password)
+  			loginButton = <button onClick={this.login.bind(this)} className="btn btn-login row row-bottom" disabled={isDisabled}>Login</button>
+
 				form =
 				<div className='login-form'>
 						<input className='row' name='email' onChange={this.onInputChange.bind(this, 'email')} value={this.state.email} type='email' placeholder='email' />
   					<input className='row' name='password' onChange={this.onInputChange.bind(this, 'password')} value={this.state.password} type='password' placeholder='password' />
 				</div>
 			} else {
+        if (this.state.isDuplicate) {
+          duplicateErrorMessage = <div>Sorry, that display name is already taken! Keep trying...<br /><br /></div>
+        }
+
+        isDisabled = (!this.state.email || !this.state.password || !this.state.displayName || this.state.isDuplicate)
 				toggleText = "Login with an existing account"
-	  		loginButton = <a href="javascript:void(0)" onClick={this.register.bind(this)} className="btn btn-register row row-bottom">Register</a>
+	  		loginButton = <button onClick={this.register.bind(this)} className="btn btn-register row row-bottom" disabled={isDisabled}>Register</button>
+
 				form =
 				<div className='login-form'>
  					<input className='row' name='email' onChange={this.onInputChange.bind(this, 'email')} value={this.state.email} type='email' placeholder='email' />
@@ -102,6 +122,7 @@ export default class Login extends React.Component {
 		return (
 			<div className="login-container">
 				{errorMessage}
+        {duplicateErrorMessage}
 				{loggedInMessage}
    			{toggleButton}
 				{form}
