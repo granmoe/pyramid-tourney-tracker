@@ -1,4 +1,6 @@
 // import less for all components
+@import './mixins.less';
+@import './variables.less';
 @import './navbar.less';
 @import './header.less';
 @import './login.less';
@@ -6,22 +8,14 @@
 @import './teams.less';
 @import './team-card.less';
 
-// TODO: create a file for color variables and whatnot
 // some global stuff
 body, * {
-		margin: 0;
-		padding: 0;
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 15px;
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
 }
 
 a {
-		text-decoration: none;
+	text-decoration: none;
 }
-
-// color palette:
-@green: #7FB800;
-@blue: #00A6ED;
-@orange: #FFB400;
-@red: #F6511D;
-@darkBlue: #0D2C54;

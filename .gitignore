@@ -1,6 +1,6 @@
 .#*
 node_modules
 .tern-port
-npm-debug.log
+npm-debug.log*
 notes.org
 build/**

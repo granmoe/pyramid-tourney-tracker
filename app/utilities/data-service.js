@@ -52,8 +52,8 @@ class service {
     this.teams.push({
 		  name: teamName,
       users: users,
-      matches: {},
   	  tournaments: {},
+      matches: {},
   	  wins: 0,
   	  losses: 0,
   	  ties: 0,
