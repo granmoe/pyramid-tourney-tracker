@@ -30,13 +30,11 @@ export default class Teams extends React.Component {
 		}
 
 		return <div className='teams'>
-			<div>
-				<div className='teams__header'>
-          <span>Browse Teams</span>
-          &nbsp;|&nbsp;
-          <span><Link to='/teams/create'>Create New Team</Link></span>
-        </div>
-			</div>
+			<div className='teams__header'>
+        <span>Browse Teams</span>
+        &nbsp;|&nbsp;
+        <span><Link to='/teams/create'>Create New Team</Link></span>
+      </div>
 
 			<div className='teams__list'>{teams}</div>
 		</div>

@@ -5,6 +5,7 @@ import { Router, Route, browserHistory } from 'react-router'
 // react components
 import App from './components/App.jsx'
 import Tournaments from './components/Tournaments.jsx'
+import TournamentFormWrapper from './components/TournamentFormWrapper.jsx'
 import Teams from './components/Teams.jsx'
 import TeamFormWrapper from './components/TeamFormWrapper.jsx'
 import LoginWrapper from './components/LoginWrapper.jsx'
@@ -38,7 +39,10 @@ render(
   <Router history={browserHistory}>
     <Route path='/' component={App}>
 			<Route path='tournaments' component={Tournaments} />
+			<Route path='tournaments/create' component={TournamentFormWrapper} onEnter={requireAuth} />
+
 			<Route path='login' component={LoginWrapper} />
+
 			<Route path='teams' component={Teams} onEnter={requireAuth} uid={userid} />
       <Route path='teams/create' component={TeamFormWrapper} onEnter={requireAuth} uid={userid} />
     </Route>
