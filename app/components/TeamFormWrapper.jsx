@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router'
 import base from '../utilities/rebase-service.js'
-import TeamCard from './TeamCard.jsx'
+import TeamForm from './TeamForm.jsx'
 
-export default class Teams extends React.Component {
+export default class TeamFormWrapper extends React.Component {
 	constructor (props) {
 		super(props)
-		this.state = { teams: [] }
+	  this.state = { teams: [], profile: {}, userid: props.route.uid }
 	}
 
 	componentDidMount () {
@@ -15,34 +15,31 @@ export default class Teams extends React.Component {
 			state: 'teams',
 			asArray: true
 		})
+
+      this.profileStream = base.bindToState('profiles/' + this.state.userid, {
+		    context: this,
+		    state: 'profile'
+	    })
 	}
 
 	render () {
-		var teams
     var teamNames = this.state.teams.map( team => { return team.name })
-
-		if (!this.state.teams.length) {
-			teams = <div className='teams__none'>No Teams Found </div>
-		} else {
-			teams = this.state.teams.map( (team, key) => {
-				return <TeamCard key={key} {...team} />
-			})
-		}
 
 		return <div className='teams'>
 			<div>
 				<div className='teams__header'>
-          <span>Browse Teams</span>
+          <span><Link to='/teams'>Browse Teams</Link></span>
           &nbsp;|&nbsp;
-          <span><Link to='/teams/create'>Create New Team</Link></span>
+          <span>Create New Team</span>
         </div>
 			</div>
 
-			<div className='teams__list'>{teams}</div>
+      <TeamForm teamNames={teamNames} userid={this.state.userid} username={this.state.profile.displayName} />
 		</div>
 	}
 
 	componentWillUnmount () {
 		base.removeBinding(this.teamsStream)
+	  base.removeBinding(this.profileStream)
 	}
 }

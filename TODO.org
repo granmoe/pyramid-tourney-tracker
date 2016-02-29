@@ -1,3 +1,12 @@
+* Work on these things first:
+** Create Tournament
+** Join Tournament
+*** add team to tourney if it is one of your teams
+*** can only join if you don't already have a team in tourney
+** Create / request match
+** Submit match results
+** Approve match results
+** Ensure all redundant records are updated (esp stats duplicated all over)
 * Data Model
 ** Tournaments
 *** ID
@@ -34,13 +43,6 @@
 *** Last Seen
 *** Tourneys (id, name, standing)
 *** Teams
-*** Wins
-*** Losses
-*** Ties
-*** Standing
-**** Rank
-**** Total Users
-*** Average
 *** Matches
 **** ID
 **** Played (mm/dd/yyyy) (when results approved)
@@ -48,6 +50,13 @@
 ***** ID
 ***** Name
 ***** Result (null, -1, 0, 1)
+*** Wins
+*** Losses
+*** Ties
+*** Average
+*** Standing
+**** Rank
+**** Total Users
 ** Teams
 *** Users
 **** ID
@@ -75,7 +84,6 @@
 *** Ties
 *** Average
 *** Standing
-*** Tier Number
 ** Matches
 *** ID
 *** Played (when results approved)
@@ -99,28 +107,15 @@
 ** Tourney Name as big heading
 ** Tourney description as subheading
 ** Tourney rules as collapsible thing
-* App
+* Features
 ** Users can create account, login
 ** Users can create teams, may contain another user
 ** Users can create tourneys
 ** Users can enter one of their teams into a tourney
 ** Users can create and submit matches
 *** Match results must be approved by both teams before they count
-* UI
-** Show all tourneys in a big grid (tournaments)
-*** Pyramid Component (Tiers)
-**** Tier Component (Teams)
-***** Team Component
-* Work on these things first:
-** Create Tournament
-** Join Tournament
-*** add team to tourney if it is one of your teams
-*** can only join if you don't already have a team in tourney
-** Create / request match
-** Submit match results
-** Approve match results
-** Ensure all redundant records are updated (esp stats duplicated all over)
 * Enhancements
+** Form validations
 ** on logout, redirect to login...or maybe onauth change callback should handle this?
 ** Streamlined flow from create user, create team, join tournament
 ** After login, show user's pending match results and active tourneys

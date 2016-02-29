@@ -6,6 +6,7 @@ import { Router, Route, browserHistory } from 'react-router'
 import App from './components/App.jsx'
 import Tournaments from './components/Tournaments.jsx'
 import Teams from './components/Teams.jsx'
+import TeamFormWrapper from './components/TeamFormWrapper.jsx'
 import LoginWrapper from './components/LoginWrapper.jsx'
 
 // styles
@@ -39,6 +40,7 @@ render(
 			<Route path='tournaments' component={Tournaments} />
 			<Route path='login' component={LoginWrapper} />
 			<Route path='teams' component={Teams} onEnter={requireAuth} uid={userid} />
+      <Route path='teams/create' component={TeamFormWrapper} onEnter={requireAuth} uid={userid} />
     </Route>
   </Router>
 , document.getElementById('app'))
