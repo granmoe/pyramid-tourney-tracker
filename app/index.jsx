@@ -1,56 +1,8 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Router, Route, browserHistory } from 'react-router'
-
-// react components
-import App from './components/App.jsx'
-import Tournaments from './components/Tournaments.jsx'
-import TournamentFormWrapper from './components/TournamentFormWrapper.jsx'
-import Teams from './components/Teams.jsx'
-import TeamFormWrapper from './components/TeamFormWrapper.jsx'
-import LoginWrapper from './components/LoginWrapper.jsx'
+import React from 'react';
+import { render } from 'react-dom';
+import { App } from './components/App.jsx';
 
 // styles
 import './stylesheets/index.less'
 
-// firebase interface
-import data from './utilities/data-service.js'
-
-function requireAuth(nextState, replace) {
-	if (!data.isLoggedIn()) {
-		replace({
-			pathname: '/login',
-			state: { nextPathname: nextState.location.pathname }
-		})
-	}
-}
-
-var userid
-
-data.root.onAuth( authData => {
-  if (authData) {
-    userid = authData.uid
-  } else {
-    userid = null
-  }
-})
-
-render(
-  <Router history={browserHistory}>
-    <Route path='/' component={App}>
-			<Route path='tournaments' component={Tournaments} />
-			<Route path='tournaments/create' component={TournamentFormWrapper} onEnter={requireAuth} />
-
-			<Route path='login' component={LoginWrapper} />
-
-			<Route path='teams' component={Teams} onEnter={requireAuth} uid={userid} />
-      <Route path='teams/create' component={TeamFormWrapper} onEnter={requireAuth} uid={userid} />
-    </Route>
-  </Router>
-, document.getElementById('app'))
-
-
-
-// TODO:
-// create route for single tournament view
-//			<Route path='matches' component={Matches} onEnter={requireAuth} />
+render(<App />, document.getElementById('app'))

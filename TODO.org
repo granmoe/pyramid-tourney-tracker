@@ -36,7 +36,7 @@
 ****** ID
 ****** Name
 ****** Result (null, -1, 0, 1)
-** Users
+** Profiles
 *** ID
 *** Created
 *** Role
@@ -115,6 +115,7 @@
 ** Users can create and submit matches
 *** Match results must be approved by both teams before they count
 * Enhancements
+** Route for single tournament, match team etc
 ** Form validations
 ** on logout, redirect to login...or maybe onauth change callback should handle this?
 ** Streamlined flow from create user, create team, join tournament

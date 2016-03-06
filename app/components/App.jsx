@@ -1,59 +1,66 @@
 import React from 'react'
-import { Link } from 'react-router'
-import data from '../utilities/data-service'
-import UserToolbar from './UserToolbar.jsx'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Provider } from 'react-redux'
+import store from '../store'
+import actions from '../actions'
 
-export default class App extends React.Component {
-	componentWillMount () {
-    this.state = { uid: null }
+// react components
+import Navbar from './Navbar.jsx'
+import Tournaments from './Tournaments.jsx'
+import TournamentsHandler from './TournamentsHandler.jsx'
+import Teams from './Teams.jsx'
+import TeamFormWrapper from './TeamFormWrapper.jsx'
+import LoginWrapper from './LoginWrapper.jsx'
 
-  	var authData = data.root.getAuth()
-
-		if (authData) {
-			this.state = { uid: authData.uid }
-		}
-
-		this.onAuthRef = this.onAuthCallback.bind(this)
-		data.root.onAuth(this.onAuthRef)
+function requireAuth(nextState, replace) {
+  return // TODO: implement this with redux
+	if (!data.isLoggedIn()) {
+		replace({
+			pathname: '/login',
+			state: { nextPathname: nextState.location.pathname }
+		})
 	}
-
-	componentWillUnmount() {
-  	data.root.offAuth(this.onAuthRef)
-	}
-
-	onAuthCallback(authData) {
-		if (authData) {
-			this.setState({ uid: authData.uid })
-		} else {
-  		this.setState({ uid: null })
-		}
-	}
-
-  render() {
-		return (
-			<div>
-      <nav className='navbar'>
-	  		<ul className='navbar__items'>
-	  			<li className='navbar__item'>
-						<Link className='navbar__link' to='/tournaments'>Tournaments</Link>
-					</li>
-	  			<li className='navbar__item'>
-							<Link className='navbar__link' to='/teams'>Teams</Link>
-					</li>
-   				{this.state.uid ? (
-						<UserToolbar uid={this.state.uid} />
-					) : (
-  					<li className='navbar__item'>
-	  					<Link className='navbar__link' to='/login'>Login</Link>
-  	    		</li>
-					)}
-  		  </ul>
-      </nav>
-
- 			<h1 className='main-header'>Pyramid Tourney Tracker</h1>
-
- 			{this.props.children}
-			</div>
-		)
-  }
 }
+
+var userid = null
+
+export class App extends React.Component {
+	componentWillMount() {
+		store.dispatch(actions.startListeningToAuth())
+	}
+
+	render() {
+		return (
+			<Provider store={store}>
+        <Router history={browserHistory}>
+          <Route path='/' component={Navbar}>
+		        <Route path='tournaments' component={TournamentsHandler} onEnter={requireAuth}>
+  	          <Route path='create' component={Tournaments} />
+  	          <Route path='browse' component={Tournaments} />
+            </Route>
+
+		        <Route path='login' component={LoginWrapper} />
+
+		        <Route path='teams' component={Teams} onEnter={requireAuth} uid={userid} />
+            <Route path='teams/create' component={TeamFormWrapper} onEnter={requireAuth} uid={userid} />
+          </Route>
+        </Router>
+      </Provider>
+		)
+	}
+}
+
+// 				<Router>
+// 					<Route path="/" component={Wrapper}>
+// 						<IndexRoute component={Articles} />
+// 					</Route>
+// 				</Router>
+// var userid
+//
+// data.root.onAuth( authData => {
+//   if (authData) {
+//     userid = authData.uid
+//   } else {
+//     userid = null
+//   }
+// })
