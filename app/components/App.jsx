@@ -5,7 +5,7 @@ import store from '../store'
 import actions from '../actions'
 
 // react components
-import Navbar from './Navbar.jsx'
+import Wrapper from './Wrapper.jsx'
 import Tournaments from './Tournaments.jsx'
 import TournamentsHandler from './TournamentsHandler.jsx'
 import Teams from './Teams.jsx'
@@ -33,7 +33,7 @@ export class App extends React.Component {
 		return (
 			<Provider store={store}>
         <Router history={browserHistory}>
-          <Route path='/' component={Navbar}>
+          <Route path='/' component={Wrapper}>
 		        <Route path='tournaments' component={TournamentsHandler} onEnter={requireAuth}>
   	          <Route path='create' component={Tournaments} />
   	          <Route path='browse' component={Tournaments} />

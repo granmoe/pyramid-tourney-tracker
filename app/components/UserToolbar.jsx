@@ -1,34 +1,25 @@
 import React from 'react'
-import data from '../utilities/data-service.js'
-import base from '../utilities/rebase-service.js'
+import { Link } from 'react-router'
 
 export default class UserToolbar extends React.Component {
-	componentWillMount () {
-		this.state = {}
-		this.dataStream = base.bindToState('profiles/' + this.props.uid, {
-			context: this,
-			state: 'profile'
-		})
-	}
-
-	logout() {
-		data.root.unauth()
-	}
-
 	render () {
-		return (
+    var toolbar
+
+    if (this.props.username) {
+      toolbar = <div className='navbar__display-name'>
+				Logged in as {this.props.username}
+			  &nbsp;
+				<a href='javascript:void(0)' onClick={this.props.onClickLogout}>(logout)</a>
+			</div>
+    } else {
+      toolbar = <Link className='navbar__link' to='/login'>Login</Link>
+    }
+
+  	return (
 			<li className='navbar__item navbar__text'>
-				<div className='navbar__display-name'>
-					Logged in as {this.state.profile && this.state.profile.displayName}
-				  &nbsp;
-					<a href='javascript:void(0)' onClick={this.logout.bind(this)}>(logout)</a>
-				</div>
+        {toolbar}
 			</li>
 		)
-	}
-
-	componentWillUnmount () {
-		base.removeBinding(this.dataStream)
 	}
 }
 

@@ -12,14 +12,33 @@ const authActions = {
 						type: C.LOGIN_USER,
 						uid: authData.uid
 					})
+          this.startListeningToProfile(dispatch, authData.uid)
 				} else {
+          this.stopListeningToProfile(dispatch)
 					if (getState().auth.currently !== C.ANONYMOUS) {
 						dispatch({ type: C.LOGOUT })
+            dispatch({ type: C.RESET_PROFILE })
 					}
 				}
 			})
 		}
 	},
+
+  startListeningToProfile (dispatch, uid) {
+    this.profileRef = fireRef.child('profiles/' + uid)
+    this.profileRef.on('value', snapshot => {
+      console.log('profile event',snapshot)
+      dispatch({
+        type: C.SET_PROFILE,
+        data: snapshot.val()
+      })
+    })
+  },
+
+  stopListeningToProfile (dispatch) {
+    this.profileRef.off('value')
+    delete this.profileRef
+  },
 
 	attemptLogin() {
 		return dispatch => {
