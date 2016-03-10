@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import {connect } from 'react-redux'
+import { connect } from 'react-redux'
 import UserToolbar from './UserToolbar.jsx'
 
 class Navbar extends React.Component {

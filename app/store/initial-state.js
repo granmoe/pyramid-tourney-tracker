@@ -6,11 +6,11 @@ export default {
     uid: null,
     username: null
   },
+  tournaments: {}
 }
 
 
 /* TODO:
-  tournaments: {},
   matches: {},
   profiles: {},
   teams: {}

@@ -15,7 +15,7 @@ const authActions = {
           this.startListeningToProfile(dispatch, authData.uid)
 				} else {
           this.stopListeningToProfile(dispatch)
-					if (getState().auth.currently !== C.ANONYMOUS) {
+					if (getState().auth.current !== C.ANONYMOUS) {
 						dispatch({ type: C.LOGOUT })
             dispatch({ type: C.RESET_PROFILE })
 					}
