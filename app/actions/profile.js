@@ -23,6 +23,10 @@ const profileActions = {
     }
   },
 
+  resetProfile (dispatch) {
+    dispatch({ type: C.RESET_PROFILE })
+  },
+
   createProfile (user) {
     return (dispatch, getState) => {
       fireRef.child('profiles').child(user.uid).set({

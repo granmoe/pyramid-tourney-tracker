@@ -18,7 +18,7 @@ const authActions = {
           profileActions.stopListeningToProfile(dispatch, getState)
 		  if (getState().auth.current !== C.ANONYMOUS) {
   		    dispatch({ type: C.LOGOUT })
-            dispatch({ type: C.RESET_PROFILE })
+            profileActions.resetProfile(dispatch)
    		  }
   	    }
   	  })
@@ -42,6 +42,7 @@ const authActions = {
     return (dispatch, getState) => {
       dispatch({ type: C.LOGOUT })
       fireRef.unauth()
+      profileActions.resetProfile(dispatch)
     }
   },
 
