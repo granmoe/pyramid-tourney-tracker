@@ -7,17 +7,18 @@ import C from '../constants'
 
 // react components
 import Wrapper from './Wrapper.jsx'
-import Tournaments from './Tournaments.jsx'
-import TournamentsHandler from './TournamentsHandler.jsx'
-import Teams from './Teams.jsx'
-import TeamFormWrapper from './TeamFormWrapper.jsx'
-import LoginWrapper from './LoginWrapper.jsx'
+import Login from '../pages/login/Login.jsx'
+// import Tournaments from '../pages/tournaments/Tournaments.jsx'
+// import TournamentsWrapper from '../pages/tournaments/TournamentsWrapper.jsx'
+// import Teams from '../pages/teams/Teams.jsx'
+// import TeamFormWrapper from '../pages/teams/TeamFormWrapper.jsx'
 
 class App extends React.Component {
   componentWillMount() {
+    this.requireAuth = this.requireAuth.bind(this)
 	store.dispatch(actions.startListeningToAuth())
     store.dispatch(actions.startListeningToTournaments())
-	//store.dispatch(actions.startListeningToProfiles())
+	store.dispatch(actions.startListeningToProfiles())
 	//store.dispatch(actions.startListeningToTeams())
   }
 
@@ -34,20 +35,20 @@ class App extends React.Component {
 	return (
       <Router history={browserHistory}>
         <Route path='/' component={Wrapper}>
-          <Route path='login' component={LoginWrapper} />
+          <Route path='login' component={Login} />
 
-	      <Route path='tournaments' component={TournamentsHandler} onEnter={this.requireAuth.bind(this)}>
-  	      <Route path='create' component={Tournaments} />
-  	      <Route path='browse' component={Tournaments} />
-        </Route>
 
-	    <Route path='teams' component={Teams} onEnter={this.requireAuth.bind(this)} uid={this.props.uid} />
-          <Route path='teams/create' component={TeamFormWrapper} onEnter={this.requireAuth.bind(this)} uid={this.props.uid} />
         </Route>
       </Router>
 	)
   }
 }
+//	      <Route path='teams' component={Teams} onEnter={this.requireAuth} uid={this.props.uid} />
+//	          <Route path='teams/create' component={TeamFormWrapper} onEnter={this.requireAuth} uid={this.props.uid} />
+//		      <Route path='tournaments' component={TournamentsWrapper} onEnter={this.requireAuth}>
+//	  	        <Route path='create' component={Tournaments} />
+//	  	        <Route path='browse' component={Tournaments} />
+//	          </Route>
 
 export default connect( state => {
   return {

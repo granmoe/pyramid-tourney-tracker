@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run webpack & npm run dev-server",
-    "webpack": "./node_modules/webpack/bin/webpack.js --progress --colors --watch",
+    "webpack": "./node_modules/webpack/bin/webpack.js --progress --colors --watch --hot --inline",
     "dev-server": "node dev-server.js"
   },
   "repository": {

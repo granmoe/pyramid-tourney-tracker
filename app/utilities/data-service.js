@@ -21,36 +21,14 @@ class service {
   }
 
   createUserAndLogin (email, password, displayName) {
-	  var userObj = { email: email, password: password }
+	var userObj = { email: email, password: password }
 
-    return this.root.createUser(userObj)
-      .then( _ => {
-        return this.root.authWithPassword(userObj)
-      })
-      .catch( error => { return error })
-      .then(function (authData) {
-        profiles.child(authData.uid).set({
-          displayName: displayName,
-          role: 'user',
-          tournaments: {},
-          teams: {},
-          matches: {},
-          wins: 0,
-          losses: 0,
-          ties: 0,
-          average: 0,
-          standing: 'none'
-        })
-      })
-      .catch( error => {
-        return error
-      })
   }
 
   createTeam (teamName, users) {
     // users = team.users schema = { ID: { name: 'bob' }, ID: { name: 'sue' }}
     this.teams.push({
-		  name: teamName,
+      name: teamName,
       users: users,
   	  tournaments: {},
       matches: {},

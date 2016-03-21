@@ -1,63 +1,57 @@
+import firebase from 'firebase'
 import C from '../constants'
-import Firebase from 'firebase'
+import profileActions from './profile' // TODO: Any way to avoid reaching into another action creator?
 
-const fireRef = new Firebase(C.FIREBASE)
+const fireRef = new firebase(C.FIREBASE)
 
 const authActions = {
-	startListeningToAuth() {
-		return (dispatch, getState) => {
-			fireRef.onAuth( authData => {
-				if (authData) {
-					dispatch({
-						type: C.LOGIN_USER,
-						uid: authData.uid
-					})
-          this.startListeningToProfile(dispatch, authData.uid)
-				} else {
-          this.stopListeningToProfile(dispatch)
-					if (getState().auth.current !== C.ANONYMOUS) {
-						dispatch({ type: C.LOGOUT })
+  startListeningToAuth() {
+    return (dispatch, getState) => {
+ 	  fireRef.onAuth( authData => {
+ 	    if (authData) {
+  		  dispatch({
+  		    type: C.LOGIN_USER,
+  		    uid: authData.uid
+  		  })
+          profileActions.startListeningToProfile(dispatch, getState, authData.uid)
+  	    } else {
+          profileActions.stopListeningToProfile(dispatch, getState)
+		  if (getState().auth.current !== C.ANONYMOUS) {
+  		    dispatch({ type: C.LOGOUT })
             dispatch({ type: C.RESET_PROFILE })
-					}
-				}
-			})
-		}
-	},
+   		  }
+  	    }
+  	  })
+    }
+  },
 
-  startListeningToProfile (dispatch, uid) {
-    this.profileRef = fireRef.child('profiles/' + uid)
-    this.profileRef.on('value', snapshot => {
-      console.log('profile event',snapshot)
-      dispatch({
-        type: C.SET_PROFILE,
-        data: snapshot.val()
+  attemptLogin(userObj) {
+    return (dispatch, getState) => {
+      dispatch({ type: C.ATTEMPTING_LOGIN })
+
+      fireRef.authWithPassword(userObj, (error, authData) => {
+        if (error) {
+          dispatch({ type: C.LOGIN_ERROR, data: { loginErrorMessage: 'Login failed! ' + error } })
+          dispatch({ type: C.LOGOUT })
+        }
       })
-    })
+    }
   },
 
-  stopListeningToProfile (dispatch) {
-    this.profileRef.off('value')
-    delete this.profileRef
+  logoutUser() {
+    return (dispatch, getState) => {
+      dispatch({ type: C.LOGOUT })
+      fireRef.unauth()
+    }
   },
 
-	attemptLogin() {
-		return dispatch => {
-			dispatch({ type: C.ATTEMPTING_LOGIN })
-			fireRef.authWithPassword(userObj, error => {
-				if (error) {
-					dispatch({ type: C.DISPLAY_ERROR, error: 'Login failed! ' + error })
-					dispatch({ type: C.LOGOUT })
-				}
-			})
-		}
-	},
-
-	logoutUser() {
-		return (dispatch) => {
-			dispatch({ type: C.LOGOUT })
-			fireRef.unauth()
-		}
-	}
+  // not sure if this needs to be tracked in app state, but it could be in the future
+  // maybe move to login page and automatically fill form and login after this?
+  createUser(userObj) { // could dispatch something saying that a user was created with username
+    return (dispatch, getState) => {
+      return fireRef.createUser(userObj)
+    }
+  }
 }
 
 export default authActions

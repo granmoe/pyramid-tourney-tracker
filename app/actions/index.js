@@ -1,4 +1,6 @@
 import authActions from './auth'
-import tournamentsActions from './tournaments.js'
+import profileActions from './profile'
+import profilesActions from './profiles'
+import tournamentsActions from './tournaments'
 
-export default Object.assign({}, authActions, tournamentsActions)
+export default Object.assign({}, authActions, tournamentsActions, profilesActions, profileActions)

@@ -3,16 +3,18 @@ import C from '../constants'
 export default {
   auth: {
     current: C.ANONYMOUS,
-    uid: null,
-    username: null
+    uid: null
   },
+  profile: {
+    ref: null
+  },
+  profiles: {},
   tournaments: {}
 }
 
 
 /* TODO:
   matches: {},
-  profiles: {},
   teams: {}
 
 profileImageURL

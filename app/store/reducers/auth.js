@@ -7,6 +7,10 @@ export default function (currentState, action) {
       return Object.assign({}, currentState, {
         current: C.AWAITING_AUTH_RESPONSE
       })
+    case C.LOGIN_ERROR:
+      return Object.assign({}, currentState, {
+        loginErrorMessage: action.data.loginErrorMessage
+      })
     case C.LOGOUT:
       return Object.assign({}, currentState, {
         current: C.ANONYMOUS,
@@ -17,14 +21,6 @@ export default function (currentState, action) {
       return Object.assign({}, currentState, {
         current: C.LOGGED_IN,
         uid: action.uid
-      })
-    case C.SET_PROFILE:
-      return Object.assign({}, currentState, {
-        username: action.data.displayName
-      })
-    case C.RESET_PROFILE:
-      return Object.assign({}, currentState, {
-        username: null
       })
     default: return currentState || initialState.auth
   }
