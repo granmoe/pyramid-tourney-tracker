@@ -1,4 +1,11 @@
 * Work on these things first:
+** Create Tournament
+** Join Tournament
+*** add team to tourney if it is one of your teams
+*** can only join if you don't already have a team in tourney
+** Create / request match
+** Submit match results
+** Approve match results
 ** Login.jsx refactor
 this.refs: { email, name, password }
 
@@ -24,13 +31,6 @@ then pull them into form
 
 <div className='login-form'>
   <EmailInput existingValues={this.props.emails} ref={ref => this.refs.email = ref} />
-** Create Tournament
-** Join Tournament
-*** add team to tourney if it is one of your teams
-*** can only join if you don't already have a team in tourney
-** Create / request match
-** Submit match results
-** Approve match results
 ** Ensure all redundant records are updated (esp stats duplicated all over)
 * Data Model
 ** Tournaments
