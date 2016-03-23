@@ -1,25 +1,28 @@
 import React from 'react'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
 import TourneyCard from './TourneyCard.jsx'
 
-export default class Tournaments extends React.Component {
-	constructor (props) {
-		super(props)
-	}
-
+class Tournaments extends React.Component {
   render () {
-    var tourneys
+    var tournamentKeys = Object.keys(this.props.tournaments)
 
-	  if (!this.props.tournaments.length) {
-			tourneys = <div className='no-tourneys'>No Tournaments Found</div>
-		} else {
-      tourneys = this.props.tournaments.map( (tourney, key) => {
-      	return <TourneyCard className='tourney-card' key={key} tourney={tourney} />
-  		})
-    }
-
-  	return <div className='tournaments__tourney-list'>
-      {tourneys}
-    </div>
+    return (
+      <div className='tournaments__tourney-list'>
+        {tournamentKeys.length ?
+          tournamentKeys.map( key => {
+            return <TourneyCard className='tourney-card' key={key} {...this.props.tournaments[key]} />
+          })
+        :
+          <div className='no-tourneys'>There are no tournaments yet. Maybe you should create one?</div>
+        }
+      </div>
+    )
   }
 }
+
+export default connect ( state => {
+  return {
+    tournaments: state.tournaments
+  }
+})(Tournaments)

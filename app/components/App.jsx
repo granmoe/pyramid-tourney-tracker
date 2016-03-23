@@ -8,8 +8,8 @@ import C from '../constants'
 // react components
 import Wrapper from './Wrapper.jsx'
 import Login from '../pages/login/Login.jsx'
-// import Tournaments from '../pages/tournaments/Tournaments.jsx'
-// import TournamentsWrapper from '../pages/tournaments/TournamentsWrapper.jsx'
+import Tournaments from '../pages/tournaments/Tournaments.jsx'
+import TournamentsWrapper from '../pages/tournaments/TournamentsWrapper.jsx'
 // import Teams from '../pages/teams/Teams.jsx'
 // import TeamFormWrapper from '../pages/teams/TeamFormWrapper.jsx'
 
@@ -37,7 +37,10 @@ class App extends React.Component {
         <Route path='/' component={Wrapper}>
           <Route path='login' component={Login} />
 
-
+	      <Route path='tournaments' component={TournamentsWrapper} onEnter={this.requireAuth}>
+  	        <Route path='create' component={Tournaments} />
+  	        <Route path='browse' component={Tournaments} />
+          </Route>
         </Route>
       </Router>
 	)
@@ -45,10 +48,6 @@ class App extends React.Component {
 }
 //	      <Route path='teams' component={Teams} onEnter={this.requireAuth} uid={this.props.uid} />
 //	          <Route path='teams/create' component={TeamFormWrapper} onEnter={this.requireAuth} uid={this.props.uid} />
-//		      <Route path='tournaments' component={TournamentsWrapper} onEnter={this.requireAuth}>
-//	  	        <Route path='create' component={Tournaments} />
-//	  	        <Route path='browse' component={Tournaments} />
-//	          </Route>
 
 export default connect( state => {
   return {
