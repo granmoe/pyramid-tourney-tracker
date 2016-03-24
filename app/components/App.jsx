@@ -38,8 +38,8 @@ class App extends React.Component {
           <Route path='login' component={Login} />
 
 	      <Route path='tournaments' component={TournamentsWrapper} onEnter={this.requireAuth}>
+            <Route path='all' component={Tournaments} />
   	        <Route path='create' component={Tournaments} />
-  	        <Route path='browse' component={Tournaments} />
           </Route>
         </Route>
       </Router>

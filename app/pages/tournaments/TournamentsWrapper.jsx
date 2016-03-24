@@ -3,14 +3,16 @@ import LinksRow from '../../components/LinksRow.jsx'
 
 export default class TournamentsWrapper extends React.Component {
   render () {
+    var page = this.props.location.pathname
+
     var links = [{
       text: 'Create',
       path: '/tournaments/create',
-      current: true
+      current: page === '/tournaments/create'
     }, {
       text: 'Browse',
-      path: '/tournaments/browse',
-      current: false
+      path: '/tournaments/all',
+      current: page === '/tournaments/all'
     }]
 
   	return (
