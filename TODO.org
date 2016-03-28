@@ -1,4 +1,5 @@
 * Work on these things first:
+** Forms refactor and style cleanup
 ** Create Tournament
 ** Join Tournament
 *** add team to tourney if it is one of your teams
@@ -6,31 +7,6 @@
 ** Create / request match
 ** Submit match results
 ** Approve match results
-** Login.jsx refactor
-this.refs: { email, name, password }
-
-validate on change, different method in each component
-
-check for duplicates:
-
-name.existingValues
-
-checkForDuplicates (name) {
-  if (!this.props.existingValues) {
-    this.setState({ isDuplicate: false })
-    return
-  }
-
-  else do the same as login.jsx is currently doing
-}
-
-create new files for these, then
-import these components in login.jsx
-
-then pull them into form
-
-<div className='login-form'>
-  <EmailInput existingValues={this.props.emails} ref={ref => this.refs.email = ref} />
 ** Ensure all redundant records are updated (esp stats duplicated all over)
 * Data Model
 ** Tournaments

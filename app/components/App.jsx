@@ -7,11 +7,11 @@ import C from '../constants'
 
 // react components
 import Wrapper from './Wrapper.jsx'
-import Login from '../pages/login/Login.jsx'
-import Tournaments from '../pages/tournaments/Tournaments.jsx'
-import TournamentsWrapper from '../pages/tournaments/TournamentsWrapper.jsx'
-// import Teams from '../pages/teams/Teams.jsx'
-// import TeamFormWrapper from '../pages/teams/TeamFormWrapper.jsx'
+import Login from '../components/login/Login.jsx'
+import Tournaments from '../components/tournaments/Tournaments.jsx'
+import TournamentsWrapper from '../components/tournaments/TournamentsWrapper.jsx'
+// import Teams from '../components/teams/Teams.jsx'
+// import TeamFormWrapper from '../components/teams/TeamFormWrapper.jsx'
 
 class App extends React.Component {
   componentWillMount() {
