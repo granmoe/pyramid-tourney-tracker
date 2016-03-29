@@ -11,10 +11,7 @@ class Login extends React.Component {
   constructor(props) {
 	super(props)
 	  this.state = {
-		attempts: 0,
-		email: '',
-		password: '',
-		displayName: ''
+		attempts: 0
 	  }
   }
 
@@ -22,9 +19,9 @@ class Login extends React.Component {
     var form
 
     if (this.state.loginSelected) {
-      form = <LoginForm />
+      form = <LoginForm test="test"/>
     } else {
-      form = <LoginForm />
+      form = <LoginForm test="test"/>
      /* form = <RegisterForm /> */
     }
 

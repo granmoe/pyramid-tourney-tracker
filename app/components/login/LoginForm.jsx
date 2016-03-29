@@ -5,7 +5,7 @@ import formValidation from '../FormValidation.jsx'
 
 class LoginForm extends React.Component {
   render() {
-    const { email, password } = this.props
+    const { email, password, onSubmit } = this.props
 	return (
   	  <div>
         <div className='row'>
@@ -22,7 +22,22 @@ class LoginForm extends React.Component {
 }
 
 const validate = values => {
-  return { values, errors: { email: 'Enter an email' }}
+  let errors = {}
+  let emailRegex = /^[^@]+@[^@]+$/
+
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!emailRegex.test(values.email)) {
+    errors.email = 'Please enter a valid email'
+  }
+
+  if (!values.password) {
+    errors.password = 'Required'
+  } else if (values.password.length < 8) {
+    errors.password = 'Password must be at least 8 characters long'
+  }
+
+  return { values: values, errors: errors }
 }
 
 const validationOptions = {

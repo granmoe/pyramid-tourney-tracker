@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default (options, WrappedComponent) => class extends React.Component {
-  constructor (props) {
-    super(props)
+export default (options, WrappedComponent) => class FormValidation extends React.Component {
+  constructor () {
+    super()
     this.validate = options.validate
 
     this.state = options.fields.reduce((result, field) => {
@@ -14,17 +14,23 @@ export default (options, WrappedComponent) => class extends React.Component {
     }, { fields: [], errors: {}, values: {}, touched: {} })
 
     this.mapStateToProps.bind(this)
+    this.runValidate.bind(this)
   }
 
   onBlur (field, e) {
     var touched = this.state.touched
     touched[field] = true
     this.setState({ touched: touched })
+    this.runValidate(field, e.target.value)
   }
 
   onChange (field, e) {
+    this.runValidate(field, e.target.value)
+  }
+
+  runValidate (field, value) {
     var values = this.state.values
-    values[field] = e.target.value
+    values[field] = value
     this.setState(this.validate(values))
   }
 
@@ -44,6 +50,6 @@ export default (options, WrappedComponent) => class extends React.Component {
   }
 
   render () {
-    return <WrappedComponent {...this.mapStateToProps(this.state)} />
+    return <WrappedComponent {...this.props} {...this.mapStateToProps(this.state)} />
   }
 }
