@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import formValidation from '../FormValidation.jsx'
 
+// TODO: Add an isValid method, and a getFormData method
 class LoginForm extends React.Component {
   render() {
     const { email, password, onSubmit } = this.props

@@ -7,7 +7,8 @@ import C from '../constants'
 
 // react components
 import Wrapper from './Wrapper.jsx'
-import Login from '../components/login/Login.jsx'
+import LoginWrapper from '../components/login/LoginWrapper.jsx'
+import RegisterWrapper from '../components/login/RegisterWrapper.jsx'
 import Tournaments from '../components/tournaments/Tournaments.jsx'
 import TournamentsWrapper from '../components/tournaments/TournamentsWrapper.jsx'
 // import Teams from '../components/teams/Teams.jsx'
@@ -35,7 +36,8 @@ class App extends React.Component {
 	return (
       <Router history={browserHistory}>
         <Route path='/' component={Wrapper}>
-          <Route path='login' component={Login} />
+          <Route path='login' component={LoginWrapper} />
+          <Route path='register' component={RegisterWrapper} />
 
 	      <Route path='tournaments' component={TournamentsWrapper} onEnter={this.requireAuth}>
             <Route path='all' component={Tournaments} />
