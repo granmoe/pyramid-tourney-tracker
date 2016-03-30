@@ -10,18 +10,17 @@ import LoginForm from './LoginForm.jsx'
 class LoginFormWrapper extends React.Component {
   render() {
     return <div className='login-container'>
-      <LoginForm onSubmit={this.login.bind(this)} />
+      <LoginForm ref='form' onSubmit={this.login.bind(this)} />
     </div>
   }
 
   login(e) {
+    e.preventDefault()
+
 	var attempts = this.state.attempts
 	this.setState({ attempts: attempts++ })
 
-    this.props.actions.attemptLogin({
-      email: this.state.email,
-      password: this.state.password,
-    })
+    this.props.actions.attemptLogin(this.refs.form.getFormData())
   }
 }
 

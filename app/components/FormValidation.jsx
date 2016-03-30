@@ -52,4 +52,8 @@ export default (options, WrappedComponent) => class FormValidation extends React
   render () {
     return <WrappedComponent {...this.props} {...this.mapStateToProps(this.state)} />
   }
+
+  getFormData () {
+    return this.state.values
+  }
 }

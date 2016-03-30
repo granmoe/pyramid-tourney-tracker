@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import formValidation from '../FormValidation.jsx'
 
-// TODO: Add an isValid method, and a getFormData method
-// And check for duplicate display names
+// TODO: check for duplicate display names
 class RegisterForm extends React.Component {
   render() {
     const { email, password, displayName, onSubmit } = this.props
@@ -22,9 +21,18 @@ class RegisterForm extends React.Component {
           <input type='password' placeholder='password' {...password} />
           {password.touched && password.error && <span className='error'>{password.error}</span>}
   	    </div>
-        <input type='submit' value='Register' />
+       <input type='submit' value='Register' disabled={!this.isValid()} />
   	  </form>
 	)
+  }
+
+  isValid () {
+    const { email, password, displayName } = this.props
+
+    if (email.error || password.error || displayName.error) { return false }
+    if (!email.value || !password.value || !displayName.value) { return false }
+
+    return true
   }
 }
 

@@ -10,26 +10,30 @@ import RegisterForm from './RegisterForm.jsx'
 class RegisterFormWrapper extends React.Component {
   render() {
     return <div className='login-container'>
-      <RegisterForm onSubmit={this.register.bind(this) }/>
+      <RegisterForm ref='form' onSubmit={this.register.bind(this) }/>
     </div>
   }
 
   register (e) {
-	this.props.actions.createUser({
-      email: this.state.email,
-      password: this.state.password,
-      displayName: this.state.displayName
-    })
+    e.preventDefault()
+
+    const data = this.refs.form.getFormData()
+
+	this.props.actions.createUser(data)
     .then( userData => {
       this.props.actions.createProfile({
         uid: userData.uid,
-        displayName: this.state.displayName
+        displayName: data.displayName
       })
     })
-    .then( _ => this.login() )
+    .then( _ => this.login(data) )
     .catch( err => {
       console.log("Error: ", err)
     })
+  }
+
+  login(authData) {
+    this.props.actions.attemptLogin(authData)
   }
 }
 

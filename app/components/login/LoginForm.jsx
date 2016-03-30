@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import formValidation from '../FormValidation.jsx'
 
-// TODO: Add an isValid method, and a getFormData method
 class LoginForm extends React.Component {
   render() {
     const { email, password, onSubmit } = this.props
@@ -17,10 +16,21 @@ class LoginForm extends React.Component {
           <input type='password' placeholder='password' {...password} />
           {password.touched && password.error && <span className='error'>{password.error}</span>}
   	    </div>
-  	  </div>
+        <input type='submit' value='Login' disabled={!this.isValid()} />
+   	  </div >
 	)
   }
+
+  isValid () {
+    const { email, password } = this.props
+
+    if (email.error || password.error ) { return false }
+    if (!email.value || !password.value ) { return false }
+
+    return true
+  }
 }
+
 
 const validate = values => {
   let errors = {}
