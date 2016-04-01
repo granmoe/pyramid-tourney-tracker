@@ -2,6 +2,18 @@
   &__header {
     margin: 15px 30px;
   }
+
+  input[type='submit'] {
+    font-weight: bold;
+
+    &:disabled {
+      color: lightgray;
+    }
+    &:enabled {
+      background-color: @orange;
+      color: #fff;
+    }
+  }
 }
 
 .login-container {

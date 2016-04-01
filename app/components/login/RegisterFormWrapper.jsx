@@ -8,7 +8,7 @@ import RegisterForm from './RegisterForm.jsx'
 
 // TODO: error handling, display something when user already logged in (or just redirect?)
 class RegisterFormWrapper extends React.Component {
-  render() {
+  render () {
     return <div className='login-container'>
       <RegisterForm ref='form' onSubmit={this.register.bind(this) }/>
     </div>
@@ -32,7 +32,7 @@ class RegisterFormWrapper extends React.Component {
     })
   }
 
-  login(authData) {
+  login (authData) {
     this.props.actions.attemptLogin(authData)
   }
 }

@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux'
 import formValidation from '../FormValidation.jsx'
 
 class LoginForm extends React.Component {
-  render() {
-    const { email, password, onSubmit } = this.props
+  render () {
+    const { email, password, onSubmit, isValid } = this.props
 	return (
   	  <div>
         <div className='row'>
@@ -16,21 +16,11 @@ class LoginForm extends React.Component {
           <input type='password' placeholder='password' {...password} />
           {password.touched && password.error && <span className='error'>{password.error}</span>}
   	    </div>
-        <input type='submit' value='Login' disabled={!this.isValid()} />
+        <input type='submit' value='Login' disabled={!isValid} />
    	  </div >
 	)
   }
-
-  isValid () {
-    const { email, password } = this.props
-
-    if (email.error || password.error ) { return false }
-    if (!email.value || !password.value ) { return false }
-
-    return true
-  }
 }
-
 
 const validate = values => {
   let errors = {}

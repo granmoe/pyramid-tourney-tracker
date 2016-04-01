@@ -50,7 +50,11 @@ export default (options, WrappedComponent) => class FormValidation extends React
   }
 
   render () {
-    return <WrappedComponent {...this.props} {...this.mapStateToProps(this.state)} />
+    return <WrappedComponent {...this.props} {...this.mapStateToProps(this.state)} isValid={this.isValid(this.state)} />
+  }
+
+  isValid (state) {
+    return state.fields.reduce((result, field) => (!!state.values[field] && !state.errors[field]), true)
   }
 
   getFormData () {
