@@ -1,12 +1,5 @@
 * Work on these things first:
 ** stateless function components
-** active style links
-Active Class Name
-
-You can also use an active class name instead of inline-styles.
-
-<li><Link to="/about" activeClassName="active">About</Link></li>
-<li><Link to="/repos" activeClassName="active">Repos</Link></li>
 ** Create Tournament
 ** Join Tournament
 *** add team to tourney if it is one of your teams
