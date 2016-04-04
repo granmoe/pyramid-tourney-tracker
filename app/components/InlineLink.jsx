@@ -6,15 +6,9 @@ export default class InlineLink extends React.Component {
     var separator
     if (!this.props.isLast) { separator = ' | ' }
 
-  	return (
-      <span>
-        {this.props.current ?
-          <span>{this.props.text}</span>
-        :
-          <span><Link to={this.props.path}>{this.props.text}</Link></span>
-        }
-        {separator}
-      </span>
-    )
+  	return <span className='link'>
+      <span><Link activeClassName='active' to={this.props.path}>{this.props.text}</Link></span>
+      {separator}
+    </span>
   }
 }

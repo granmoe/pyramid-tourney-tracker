@@ -21,4 +21,3 @@ export default function (currentState, action) {
     default: return currentState || initialState.auth
   }
 }
-
