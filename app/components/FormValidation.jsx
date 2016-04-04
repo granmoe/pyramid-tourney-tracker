@@ -52,7 +52,7 @@ export default (options, WrappedComponent) => class FormValidation extends React
   }
 
   isValid (state) {
-    return state.fields.reduce((previous, current) => previous && (!!state.values[current] && !state.errors[current]))
+    return state.fields.reduce((previous, current) => previous && (!!state.values[current] && !state.errors[current]), true)
   }
 
   getFormData () {

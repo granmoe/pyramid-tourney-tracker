@@ -3,23 +3,20 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import formValidation from '../FormValidation.jsx'
 
-class LoginForm extends React.Component {
-  render () {
-    const { email, password, onSubmit, isValid } = this.props
-	return (
-  	  <form onSubmit={onSubmit}>
-        <div className='row'>
-          <input type='email' placeholder='email' {...email} />
-          {email.touched && email.error && <span className='error'>{email.error}</span>}
-        </div>
-        <div className='row'>
-          <input type='password' placeholder='password' {...password} />
-          {password.touched && password.error && <span className='error'>{password.error}</span>}
-  	    </div>
-        <input type='submit' value='Login' disabled={!isValid} />
-   	  </form>
-	)
-  }
+const LoginForm = props => {
+    const { email, password, onSubmit, isValid } = props
+
+	return <form onSubmit={onSubmit}>
+      <div className='row'>
+        <input type='email' placeholder='email' {...email} />
+        {email.touched && email.error && <span className='error'>{email.error}</span>}
+      </div>
+      <div className='row'>
+        <input type='password' placeholder='password' {...password} />
+        {password.touched && password.error && <span className='error'>{password.error}</span>}
+	    </div>
+      <input type='submit' value='Login' disabled={!isValid} />
+    </form>
 }
 
 const validate = values => {

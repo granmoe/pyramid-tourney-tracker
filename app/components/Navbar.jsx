@@ -6,24 +6,20 @@ import UserToolbar from './UserToolbar.jsx'
 import C from '../constants'
 import authActions from '../actions/auth'
 
-class Navbar extends React.Component {
-  render() {
-    var onClickLogout = this.props.actions.logoutUser
+const Navbar = props => {
+  var onClickLogout = props.actions.logoutUser
 
-	return (
-      <nav className='navbar'>
-	  	<ul className='navbar__items'>
-	  	  <li className='navbar__item'>
-			<Link className='navbar__link' to='/tournaments'>Tournaments</Link>
-		  </li>
-	  	  <li className='navbar__item'>
-			<Link className='navbar__link' to='/teams'>Teams</Link>
-		  </li>
-		  <UserToolbar displayName={this.props.displayName} onClickLogout={onClickLogout} />
-  		</ul>
-      </nav>
-	)
-  }
+  return <nav className='navbar'>
+ 	<ul className='navbar__items'>
+ 	  <li className='navbar__item'>
+        <Link className='navbar__link' to='/tournaments'>Tournaments</Link>
+      </li>
+	  <li className='navbar__item'>
+        <Link className='navbar__link' to='/teams'>Teams</Link>
+      </li>
+      <UserToolbar displayName={props.displayName} onClickLogout={onClickLogout} />
+	</ul>
+  </nav>
 }
 
 const mapStateToProps = (state, ownProps) => {
