@@ -35,7 +35,7 @@ export default (options, WrappedComponent) => class FormValidation extends React
   }
 
   mapStateToProps (state) {
-    var reducer = (result, field) => {
+    return state.fields.reduce((result, field) => {
       result[field] = {
         value: state.values[field],
         error: state.errors[field],
@@ -44,9 +44,7 @@ export default (options, WrappedComponent) => class FormValidation extends React
         onBlur: this.onBlur.bind(this, field)
       }
       return result
-    }
-
-    return state.fields.reduce(reducer, {})
+    }, {})
   }
 
   render () {
@@ -54,7 +52,7 @@ export default (options, WrappedComponent) => class FormValidation extends React
   }
 
   isValid (state) {
-    return state.fields.reduce((result, field) => (!!state.values[field] && !state.errors[field]), true)
+    return state.fields.reduce((previous, current) => previous && (!!state.values[current] && !state.errors[current]))
   }
 
   getFormData () {

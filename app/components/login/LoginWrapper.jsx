@@ -4,16 +4,12 @@ import LinksRow from '../../components/LinksRow.jsx'
 
 export default class LoginWrapper extends React.Component {
   render () {
-    var page = this.props.location.pathname
-
     var links = [{
       text: 'Login',
-      path: '/login',
-      current: true
+      path: '/login'
     }, {
       text: 'Register',
-      path: '/register',
-      current: false
+      path: '/register'
     }]
 
   	return (
@@ -21,7 +17,7 @@ export default class LoginWrapper extends React.Component {
         <div className='login__header'>
           <LinksRow links={links} />
         </div>
-        <LoginFormWrapper />
+        <LoginFormWrapper history={this.props.history} />
       </div>
     )
   }

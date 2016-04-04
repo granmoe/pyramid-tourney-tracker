@@ -6,12 +6,10 @@ export default class RegisterWrapper extends React.Component {
   render () {
     var links = [{
       text: 'Login',
-      path: '/login',
-      current: false
+      path: '/login'
     }, {
       text: 'Register',
-      path: '/register',
-      current: true
+      path: '/register'
     }]
 
   	return (
@@ -19,8 +17,9 @@ export default class RegisterWrapper extends React.Component {
         <div className='login__header'>
           <LinksRow links={links} />
         </div>
-        <RegisterFormWrapper />
+        <RegisterFormWrapper history={this.props.history} />
       </div>
     )
   }
 }
+

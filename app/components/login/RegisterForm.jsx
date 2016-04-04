@@ -6,7 +6,7 @@ import formValidation from '../FormValidation.jsx'
 // TODO: check for duplicate display names
 class RegisterForm extends React.Component {
   render() {
-    const { email, password, displayName, onSubmit } = this.props
+    const { email, password, displayName, isValid, onSubmit } = this.props
 	return (
   	  <form onSubmit={onSubmit}>
         <div className='row'>
@@ -21,18 +21,9 @@ class RegisterForm extends React.Component {
           <input type='password' placeholder='password' {...password} />
           {password.touched && password.error && <span className='error'>{password.error}</span>}
   	    </div>
-       <input type='submit' value='Register' disabled={!this.isValid()} />
+       <input type='submit' value='Register' disabled={!isValid} />
   	  </form>
 	)
-  }
-
-  isValid () {
-    const { email, password, displayName } = this.props
-
-    if (email.error || password.error || displayName.error) { return false }
-    if (!email.value || !password.value || !displayName.value) { return false }
-
-    return true
   }
 }
 

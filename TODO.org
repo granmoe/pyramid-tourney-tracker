@@ -1,5 +1,12 @@
 * Work on these things first:
-** Forms refactor and style cleanup
+** stateless function components
+** active style links
+Active Class Name
+
+You can also use an active class name instead of inline-styles.
+
+<li><Link to="/about" activeClassName="active">About</Link></li>
+<li><Link to="/repos" activeClassName="active">Repos</Link></li>
 ** Create Tournament
 ** Join Tournament
 *** add team to tourney if it is one of your teams
@@ -7,7 +14,8 @@
 ** Create / request match
 ** Submit match results
 ** Approve match results
-** Ensure all redundant records are updated (esp stats duplicated all over)
+** Make sure BE is working right
+*** Ensure all redundant records are updated (esp stats duplicated all over)
 * Data Model
 ** Tournaments
 *** ID

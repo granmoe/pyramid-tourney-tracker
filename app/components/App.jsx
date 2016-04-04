@@ -15,7 +15,7 @@ import TournamentsWrapper from '../components/tournaments/TournamentsWrapper.jsx
 // import TeamFormWrapper from '../components/teams/TeamFormWrapper.jsx'
 
 class App extends React.Component {
-  componentWillMount() {
+  componentWillMount () {
     this.requireAuth = this.requireAuth.bind(this)
 	store.dispatch(actions.startListeningToAuth())
     store.dispatch(actions.startListeningToTournaments())
@@ -23,10 +23,19 @@ class App extends React.Component {
 	//store.dispatch(actions.startListeningToTeams())
   }
 
-  requireAuth(nextState, replace) {
-    if (this.props.authStatus !== C.LOGGED_IN) {
+  requireAuth (nextState, replace) {
+    if (!this.props.isLoggedIn) {
 	  replace({
 	  	pathname: '/login',
+	  	state: { nextPathname: nextState.location.pathname }
+	  })
+    }
+  }
+
+  sendHome (nextState, replace) {
+    if (this.props.isLoggedIn) {
+	  replace({
+	  	pathname: '/',
 	  	state: { nextPathname: nextState.location.pathname }
 	  })
     }
@@ -36,8 +45,8 @@ class App extends React.Component {
 	return (
       <Router history={browserHistory}>
         <Route path='/' component={Wrapper}>
-          <Route path='login' component={LoginWrapper} />
-          <Route path='register' component={RegisterWrapper} />
+          <Route path='login' component={LoginWrapper} onEnter={this.sendHome.bind(this)} />
+          <Route path='register' component={RegisterWrapper} onEnter={this.sendHome.bind(this)} />
 
 	      <Route path='tournaments' component={TournamentsWrapper} onEnter={this.requireAuth}>
             <Route path='all' component={Tournaments} />
@@ -53,7 +62,7 @@ class App extends React.Component {
 
 export default connect( state => {
   return {
-    authStatus: state.auth.current,
+    isLoggedIn: state.auth.current === C.LOGGED_IN,
     uid: state.auth.uid
   }
 })(App)

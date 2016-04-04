@@ -11,7 +11,11 @@ const authActions = {
  	    if (authData) {
   		  dispatch({
   		    type: C.LOGIN_USER,
-  		    uid: authData.uid
+  		    data: {
+              uid: authData.uid,
+              current: C.LOGGED_IN,
+              loginErrorMessage: null
+            }
   		  })
           profileActions.startListeningToProfile(dispatch, getState, authData.uid)
   	    } else {
@@ -27,14 +31,8 @@ const authActions = {
 
   attemptLogin(userObj) {
     return (dispatch, getState) => {
-      dispatch({ type: C.ATTEMPTING_LOGIN })
-
-      fireRef.authWithPassword(userObj, (error, authData) => {
-        if (error) {
-          dispatch({ type: C.LOGIN_ERROR, data: { loginErrorMessage: 'Login failed! ' + error } })
-          dispatch({ type: C.LOGOUT })
-        }
-      })
+      dispatch({ type: C.ATTEMPTING_LOGIN, data: { current: C.AWAITING_AUTH_RESPONSE } })
+      return fireRef.authWithPassword(userObj)
     }
   },
 
@@ -46,8 +44,23 @@ const authActions = {
     }
   },
 
+  loginError (message) {
+    return {
+      type: C.LOGIN_ERROR,
+      data: { loginErrorMessage: message }
+    }
+  },
+
+  registerError (message) {
+    return {
+      type: C.REGISTER_ERROR,
+      data: { registerErrorMessage: message }
+    }
+  },
+
   // not sure if this needs to be tracked in app state, but it could be in the future
   // maybe move to login page and automatically fill form and login after this?
+  // or auth status could change to 'awaiting register response'
   createUser(userObj) { // could dispatch something saying that a user was created with username
     return (dispatch, getState) => {
       return fireRef.createUser(userObj)

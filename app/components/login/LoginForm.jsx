@@ -7,7 +7,7 @@ class LoginForm extends React.Component {
   render () {
     const { email, password, onSubmit, isValid } = this.props
 	return (
-  	  <div>
+  	  <form onSubmit={onSubmit}>
         <div className='row'>
           <input type='email' placeholder='email' {...email} />
           {email.touched && email.error && <span className='error'>{email.error}</span>}
@@ -17,7 +17,7 @@ class LoginForm extends React.Component {
           {password.touched && password.error && <span className='error'>{password.error}</span>}
   	    </div>
         <input type='submit' value='Login' disabled={!isValid} />
-   	  </div >
+   	  </form>
 	)
   }
 }
@@ -34,8 +34,8 @@ const validate = values => {
 
   if (!values.password) {
     errors.password = 'Required'
-  } else if (values.password.length < 8) {
-    errors.password = 'Password must be at least 8 characters long'
+  } else if (values.password.length < 4) {
+    errors.password = 'Password must be at least 4 characters long'
   }
 
   return { values: values, errors: errors }
