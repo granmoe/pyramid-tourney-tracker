@@ -1,14 +1,16 @@
-* Work on these things first:
-** stateless function components
+* Work on these things first
 ** Create Tournament
+*** Form with all needed info
 ** Join Tournament
+*** User navigates to a single tourney from the browse tourneys view
+*** User can only join if they are not already in the tournament...they may also have the option to leave tourney (in case partner can't play anymore etc)
+*** User hits a button to join tourney and join tourney view displays (a dropdown of users eligible teams)
 *** add team to tourney if it is one of your teams
 *** can only join if you don't already have a team in tourney
+*** if it is a solo tourney (remember to add this option), only a team consisting only of the user can join
 ** Create / request match
 ** Submit match results
 ** Approve match results
-** Make sure BE is working right
-*** Ensure all redundant records are updated (esp stats duplicated all over)
 * Data Model
 ** Tournaments
 *** ID
@@ -118,9 +120,7 @@
 *** Match results must be approved by both teams before they count
 * Enhancements
 ** Route for single tournament, match team etc
-** Form validations
-** on logout, redirect to login...or maybe onauth change callback should handle this?
-** Streamlined flow from create user, create team, join tournament
+** Streamlined flow: create user, create team, join tournament
 ** After login, show user's pending match results and active tourneys
 ** Activity Feed Widget
 ** Other user must accept request to be on a team
