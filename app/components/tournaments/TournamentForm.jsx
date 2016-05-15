@@ -4,29 +4,29 @@ import data from '../utilities/data-service.js'
 import base from '../utilities/rebase-service.js'
 
 export default class TeamForm extends React.Component {
-	constructor (props) {
-		super(props)
-	    this.state = { profiles: [], formOpen: false, isDuplicate: false }
-	}
+  constructor (props) {
+	super(props)
+	  this.state = { profiles: [], formOpen: false, isDuplicate: false }
+  }
 
-	componentDidMount () {
-		this.dataStream = base.bindToState('profiles', {
-			context: this,
-			state: 'profiles',
+  componentDidMount () {
+	this.dataStream = base.bindToState('profiles', {
+	  context: this,
+	  state: 'profiles',
       teamName: '',
       teamMateId: '',
-			asArray: true
-		})
-	}
+	  asArray: true
+	})
+  }
 
-	componentWillUnmount () {
-		base.removeBinding(this.dataStream)
-	}
+  componentWillUnmount () {
+	base.removeBinding(this.dataStream)
+  }
 
-	onClickCreate (e) {
-		e.preventDefault()
-	    this.setState({ formOpen: !this.state.formOpen })
-	}
+  onClickCreate (e) {
+	e.preventDefault()
+	  this.setState({ formOpen: !this.state.formOpen })
+  }
 
   render () {
     var formFields
@@ -52,7 +52,7 @@ export default class TeamForm extends React.Component {
       }
 
       formFields = <div>
-	  		<input className='teams__team-name' name='teamName' onChange={this.onInputChange.bind(this, 'teamName')} value={this.state.teamName} type='text' placeholder='team name' />
+	  	<input className='teams__team-name' name='teamName' onChange={this.onInputChange.bind(this, 'teamName')} value={this.state.teamName} type='text' placeholder='team name' />
         <select className='teams__select-user' onChange={this.onSelectChange.bind(this)}>
           <option key='none' value=''>None Selected</option>
           {options}
@@ -65,15 +65,15 @@ export default class TeamForm extends React.Component {
     }
 
     return (
- 			<form action="" className='teams__create-form'>
-				<div onClick={this.onClickCreate.bind(this)} className='teams__collapse-button'>
-					<span>Create New Team</span>
-					<i className='material-icons teams__collapse-icon'>{collapseIcon}</i>
-				</div>
+ 	  <form action="" className='teams__create-form'>
+		<div onClick={this.onClickCreate.bind(this)} className='teams__collapse-button'>
+		  <span>Create New Team</span>
+		  <i className='material-icons teams__collapse-icon'>{collapseIcon}</i>
+		</div>
         {errorMessage}
         {formFields}
         {submitButton}
-			</form>
+	  </form>
     )
   }
 
@@ -101,13 +101,13 @@ export default class TeamForm extends React.Component {
     })
   }
 
-	onInputChange (fieldName, e) {
-		if (fieldName === 'teamName') {
-			this.setState({ teamName : e.target.value })
+  onInputChange (fieldName, e) {
+	if (fieldName === 'teamName') {
+	  this.setState({ teamName : e.target.value })
 
         this.checkForDuplicates(e.target.value)
-	  }
 	}
+  }
 
   checkForDuplicates (name) {
     if (_.includes(this.props.teamNames, name)) {

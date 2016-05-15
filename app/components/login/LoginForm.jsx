@@ -1,6 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import formValidation from '../FormValidation.jsx'
 
 const LoginForm = props => {
@@ -43,4 +41,4 @@ const validationOptions = {
   validate: validate
 }
 
-export default formValidation(validationOptions, LoginForm)
+export default formValidation(validationOptions)(LoginForm)

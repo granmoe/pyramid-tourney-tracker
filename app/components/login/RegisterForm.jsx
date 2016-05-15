@@ -1,30 +1,26 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import formValidation from '../FormValidation.jsx'
 
 // TODO: check for duplicate display names
-class RegisterForm extends React.Component {
-  render() {
-    const { email, password, displayName, isValid, onSubmit } = this.props
-	return (
-  	  <form onSubmit={onSubmit}>
-        <div className='row'>
-          <input type='email' placeholder='email' {...email} />
-          {email.touched && email.error && <span className='error'>{email.error}</span>}
-        </div>
-        <div className='row'>
-          <input type='displayName' placeholder='display name' {...displayName} />
-          {displayName.touched && displayName.error && <span className='error'>{displayName.error}</span>}
-  	    </div>
-        <div className='row'>
-          <input type='password' placeholder='password' {...password} />
-          {password.touched && password.error && <span className='error'>{password.error}</span>}
-  	    </div>
-       <input type='submit' value='Register' disabled={!isValid} />
-  	  </form>
-	)
-  }
+const RegisterForm = props => {
+  const { email, password, displayName, isValid, onSubmit } = props
+  return (
+  	<form onSubmit={onSubmit}>
+      <div className='row'>
+        <input type='email' placeholder='email' {...email} />
+        {email.touched && email.error && <span className='error'>{email.error}</span>}
+      </div>
+      <div className='row'>
+        <input type='displayName' placeholder='display name' {...displayName} />
+        {displayName.touched && displayName.error && <span className='error'>{displayName.error}</span>}
+  	  </div>
+      <div className='row'>
+        <input type='password' placeholder='password' {...password} />
+        {password.touched && password.error && <span className='error'>{password.error}</span>}
+  	  </div>
+      <input type='submit' value='Register' disabled={!isValid} />
+  	</form>
+  )
 }
 
 const validate = values => {
@@ -55,4 +51,4 @@ const validationOptions = {
   validate: validate
 }
 
-export default formValidation(validationOptions, RegisterForm)
+export default formValidation(validationOptions)(RegisterForm)
