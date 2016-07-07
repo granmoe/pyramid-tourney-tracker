@@ -1,3 +1,9 @@
+LinksRow can just look at active page (set active page on app state) to determine what links to show
+Then links row logic can be deleted from registerwrapper and loginwrapper and these two components can be deleted
+
+
+
+
 * Work on these things first
 ** Create Tournament
 *** Form with all needed info

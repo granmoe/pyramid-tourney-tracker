@@ -7,10 +7,12 @@ import RegisterForm from './RegisterForm.jsx'
 
 class RegisterFormWrapper extends React.Component {
   render () {
-    return <div className='login-container'>
-      {this.props.registerErrorMessage && <div className='error'>Registration failed! {this.props.registerErrorMessage}</div>}
-      <RegisterForm ref='form' onSubmit={this.register.bind(this) }/>
-    </div>
+    return (
+      <div className="login-container">
+        {this.props.registerErrorMessage && <div className="error">Registration failed! {this.props.registerErrorMessage}</div>}
+        <RegisterForm ref="form" onSubmit={this.register.bind(this) }/>
+      </div>
+    )
   }
 
   register (e) {
@@ -18,24 +20,24 @@ class RegisterFormWrapper extends React.Component {
 
     const data = this.refs.form.getFormData()
 
-	this.props.actions.createUser(data)
-      .then( userData => {
-        this.props.actions.createProfile({
-          uid: userData.uid,
-          displayName: data.displayName
-        })
+    this.props.actions.createUser(data)
+    .then(userData => {
+      this.props.actions.createProfile({
+        uid: userData.uid,
+        displayName: data.displayName
       })
-      .then( _ => this.login(data) )
-      .catch( error => {
-        this.props.actions.registerError(error.message)
-      })
+    })
+    .then(_ => this.login(data))
+    .catch(error => {
+      this.props.actions.registerError(error.message)
+    })
   }
 
   login (authData) {
     this.props.actions.attemptLogin(authData)
-      .then( _ => {
-        this.props.history.push('/')
-      })
+    .then(_ => {
+      this.props.history.push('/')
+    })
   }
 }
 

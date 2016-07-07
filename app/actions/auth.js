@@ -7,25 +7,25 @@ const fireRef = new firebase(C.FIREBASE)
 const authActions = {
   startListeningToAuth() {
     return (dispatch, getState) => {
- 	  fireRef.onAuth( authData => {
- 	    if (authData) {
-  		  dispatch({
-  		    type: C.LOGIN_USER,
-  		    data: {
+      fireRef.onAuth( authData => {
+        if (authData) {
+          dispatch({
+            type: C.LOGIN_USER,
+            data: {
               uid: authData.uid,
               current: C.LOGGED_IN,
               loginErrorMessage: null
             }
-  		  })
+          })
           profileActions.startListeningToProfile(dispatch, getState, authData.uid)
-  	    } else {
+        } else {
           profileActions.stopListeningToProfile(dispatch, getState)
-		  if (getState().auth.current !== C.ANONYMOUS) {
-  		    dispatch({ type: C.LOGOUT })
+          if (getState().auth.current !== C.ANONYMOUS) {
+            dispatch({ type: C.LOGOUT })
             profileActions.resetProfile(dispatch)
-   		  }
-  	    }
-  	  })
+          }
+        }
+      })
     }
   },
 

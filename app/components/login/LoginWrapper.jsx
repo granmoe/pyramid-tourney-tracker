@@ -11,12 +11,14 @@ const LoginWrapper = props => {
     path: '/register'
   }]
 
-  return <div className='login'>
-    <div className='login__header'>
-      <LinksRow links={links} />
+  return (
+    <div className="login">
+      <div className="login__header">
+        <LinksRow links={links} />
+      </div>
+      <LoginFormWrapper history={props.history} />
     </div>
-    <LoginFormWrapper history={props.history} />
-  </div>
+  )
 }
 
 export default LoginWrapper
