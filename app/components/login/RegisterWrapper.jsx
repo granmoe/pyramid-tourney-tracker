@@ -1,20 +1,12 @@
 import React from 'react'
 import RegisterFormWrapper from './RegisterFormWrapper.jsx'
-import LinksRow from '../../components/LinksRow.jsx'
 
 const RegisterWrapper = props => {
-  var links = [{
-    text: 'Login',
-    path: '/login'
-  }, {
-    text: 'Register',
-    path: '/register'
-  }]
+// TODO: Put the styles of login__header class on the links in wrapper.jsx
 
   return (
     <div className="login">
       <div className="login__header">
-        <LinksRow links={links} />
       </div>
       <RegisterFormWrapper history={props.history} />
     </div>

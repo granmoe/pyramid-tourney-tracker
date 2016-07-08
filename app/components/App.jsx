@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Router, Route, browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import store from '../store'
 import actions from '../actions'
@@ -20,7 +20,7 @@ class App extends React.Component {
     store.dispatch(actions.startListeningToAuth())
     store.dispatch(actions.startListeningToTournaments())
     store.dispatch(actions.startListeningToProfiles())
-    //store.dispatch(actions.startListeningToTeams())
+    // store.dispatch(actions.startListeningToTeams())
   }
 
   requireAuth (nextState, replace) {
@@ -41,18 +41,18 @@ class App extends React.Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <Router history={browserHistory}>
-      <Route path='/' component={Wrapper}>
-      <Route path='login' component={LoginWrapper} onEnter={this.sendHome.bind(this)} />
-      <Route path='register' component={RegisterWrapper} onEnter={this.sendHome.bind(this)} />
+        <Route path="/" component={Wrapper}>
+          <Route path="login" component={LoginWrapper} onEnter={this.sendHome.bind(this)} />
+          <Route path="register" component={RegisterWrapper} onEnter={this.sendHome.bind(this)} />
 
-      <Route path='tournaments' component={TournamentsWrapper} onEnter={this.requireAuth}>
-      <Route path='all' component={Tournaments} />
-      <Route path='create' component={Tournaments} />
-      </Route>
-      </Route>
+          <Route path="tournaments" component={TournamentsWrapper} onEnter={this.requireAuth}>
+            <Route path="all" component={Tournaments} />
+            <Route path="create" component={Tournaments} />
+          </Route>
+        </Route>
       </Router>
     )
   }
@@ -60,7 +60,7 @@ class App extends React.Component {
 //	      <Route path='teams' component={Teams} onEnter={this.requireAuth} uid={this.props.uid} />
 //	          <Route path='teams/create' component={TeamFormWrapper} onEnter={this.requireAuth} uid={this.props.uid} />
 
-export default connect( state => {
+export default connect(state => {
   return {
     isLoggedIn: state.auth.current === C.LOGGED_IN,
     uid: state.auth.uid
